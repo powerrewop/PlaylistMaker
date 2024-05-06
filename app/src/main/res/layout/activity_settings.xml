@@ -15,20 +15,12 @@
             android:layout_marginTop="@dimen/dp_16"
             >
 
-        <Button
-            android:layout_width="@dimen/dp_44"
-            android:layout_height="@dimen/dp_44"
-            android:backgroundTint="@color/white"
-            android:text="Н"
-            android:textSize="@dimen/sp_22"
-            android:textColor="@color/tx_color"
-            app:cornerRadius="0pt"
-            app:icon="@drawable/back"
-            app:iconTint="@color/tx_color"
-            app:iconGravity="textStart"
-            android:layout_gravity="start"
-            />
-
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:scaleType="centerCrop"
+                android:src="@drawable/back"
+                android:layout_gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
