@@ -19,7 +19,7 @@
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
             android:backgroundTint="@color/white"
-            android:text=""
+            android:text="Н"
             android:textSize="@dimen/sp_22"
             android:textColor="@color/tx_color"
             app:cornerRadius="0pt"
@@ -58,11 +58,12 @@
             android:textColor="@color/tx_color"
             android:textSize="@dimen/sp_16"
             android:layout_marginStart="@dimen/dp_16"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
 
         <Switch
             android:layout_width="@dimen/dp_60"
-            android:layout_height="@dimen/dp_24"
+            android:layout_height="@dimen/dp_44"
             android:layout_gravity="end"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
