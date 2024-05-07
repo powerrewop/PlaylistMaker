@@ -16,13 +16,15 @@
             >
 
             <ImageView
+                android:id="@+id/bt_back"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
+                android:layout_gravity="center"
+                android:foreground="?attr/selectableItemBackground"
                 android:scaleType="centerCrop"
-                android:src="@drawable/back"
-                android:layout_gravity="center"/>
+                android:src="@drawable/back" />
 
-        <TextView
+            <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -82,7 +84,8 @@
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
         android:scaleType="centerCrop"
-        android:src="@drawable/share" />
+        android:src="@drawable/share"
+            android:foreground="?attr/selectableItemBackground"/>
 
     </LinearLayout>
 
@@ -107,7 +110,8 @@
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
             android:scaleType="centerCrop"
-            android:src="@drawable/support" />
+            android:src="@drawable/support"
+            android:foreground="?attr/selectableItemBackground"/>
 
     </LinearLayout>
 
@@ -132,7 +136,8 @@
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
             android:scaleType="centerCrop"
-            android:src="@drawable/allow" />
+            android:src="@drawable/allow"
+            android:foreground="?attr/selectableItemBackground"/>
     </LinearLayout>
 
 </LinearLayout>
