@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/dp_45"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="@dimen/dp_20"
         >
 
