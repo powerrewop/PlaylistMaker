@@ -10,16 +10,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*
-        //Через анонимный класс
-        val bt_search = findViewById<Button>(R.id.bt_search)
-        val searchBtClickListener: View.OnClickListener = object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                Toast.makeText(this@MainActivity, "Нажата кнопка ПОИСК!", Toast.LENGTH_SHORT).show()
-            }
-        }
-        bt_search.setOnClickListener(searchBtClickListener)
-        */
 
         val btSearch = findViewById<Button>(R.id.bt_search)
         btSearch.setOnClickListener {

@@ -55,7 +55,7 @@
             android:layout_gravity="center"/>
 
         <Switch
-            android:layout_width="@dimen/dp_60"
+            android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
             android:layout_gravity="end"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -82,7 +82,7 @@
         <ImageView
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         android:src="@drawable/share"
             android:foreground="?attr/selectableItemBackground"/>
 
@@ -108,7 +108,7 @@
         <ImageView
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             android:src="@drawable/support"
             android:foreground="?attr/selectableItemBackground"/>
 
@@ -134,7 +134,7 @@
         <ImageView
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             android:src="@drawable/allow"
             android:foreground="?attr/selectableItemBackground"/>
     </LinearLayout>
