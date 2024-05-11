@@ -47,6 +47,7 @@
             app:iconGravity="textStart"
             app:iconPadding="@dimen/dp_7"
             android:foreground="?attr/selectableItemBackground"
+            android:textAllCaps="false"
             />
 
         <Button
@@ -65,6 +66,7 @@
             app:iconGravity="textStart"
             app:iconPadding="@dimen/dp_7"
             android:foreground="?attr/selectableItemBackground"
+            android:textAllCaps="false"
             />
 
         <Button
@@ -83,6 +85,7 @@
             app:iconGravity="textStart"
             app:iconPadding="@dimen/dp_7"
             android:foreground="?attr/selectableItemBackground"
+            android:textAllCaps="false"
             />
 
     </LinearLayout>
