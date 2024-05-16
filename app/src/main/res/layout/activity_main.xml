@@ -1,5 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/my_background"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_20">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_22"
+            android:layout_marginStart="12dp"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/button_search"
+            android:textSize="@dimen/sp_22"
+            android:textColor="@color/tx_color"
+            app:cornerRadius="@dimen/dp_16"
+            app:icon="@drawable/search"
+            app:iconTint="@color/tx_color"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_7"
+            android:foreground="?attr/selectableItemBackground"
+            android:textAllCaps="false"
+            />
+
+        <Button
+            android:id="@+id/bt_media"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/button_lib"
+            android:textSize="@dimen/sp_22"
+            android:textColor="@color/tx_color"
+            app:cornerRadius="@dimen/dp_16"
+            app:icon="@drawable/lib"
+            app:iconTint="@color/tx_color"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_7"
+            android:foreground="?attr/selectableItemBackground"
+            android:textAllCaps="false"
+            />
+
+        <Button
+            android:id="@+id/bt_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/button_settings"
+            android:textSize="@dimen/sp_22"
+            android:textColor="@color/tx_color"
+            app:cornerRadius="@dimen/dp_16"
+            app:icon="@drawable/settings"
+            app:iconTint="@color/tx_color"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dp_7"
+            android:foreground="?attr/selectableItemBackground"
+            android:textAllCaps="false"
+            />
+
+    </LinearLayout>
 </LinearLayout>
