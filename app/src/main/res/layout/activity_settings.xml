@@ -7,21 +7,17 @@
     android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginStart="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_16"
+            style="@style/LinearLayoutStyle"
             >
 
             <ImageView
                 android:id="@+id/bt_back"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
                 android:layout_gravity="center"
-                android:foreground="?attr/selectableItemBackground"
-                android:scaleType="centerCrop"
-                android:src="@drawable/back" />
+                android:src="@drawable/back"
+                style="@style/ImageViewStyle"
+                android:scaleType="centerCrop"/>
 
             <TextView
             android:layout_width="wrap_content"
@@ -31,28 +27,24 @@
             android:textColor="@color/tx_color"
             android:textSize="@dimen/sp_22"
             android:layout_marginStart="@dimen/dp_20"
-
+                android:fontFamily="@font/ys_display_medium"
+                android:textFontWeight="500"
             />
 
         </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="@dimen/dp_60"
         android:layout_marginEnd="@dimen/dp_10"
+        style="@style/LinearLayoutStyle"
         >
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/text_nt"
             android:textColor="@color/tx_color"
-            android:textSize="@dimen/sp_16"
-            android:layout_marginStart="@dimen/dp_16"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
+            style="@style/TextViewStyle"
+            />
 
         <Switch
             android:layout_width="@dimen/dp_44"
@@ -63,80 +55,53 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="@dimen/dp_20"
+        style="@style/LinearLayoutStyle"
         >
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="@string/text_share"
             android:textColor="@color/tx_color"
-            android:textSize="@dimen/sp_16"
-            android:layout_marginStart="@dimen/dp_16"
-            android:layout_weight="1"/>
+            style="@style/TextViewStyle"/>
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-        android:scaleType="center"
-        android:src="@drawable/share"
-            android:foreground="?attr/selectableItemBackground"/>
+            android:src="@drawable/share"
+            style="@style/ImageViewStyle"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="@dimen/dp_45"
         android:layout_marginEnd="@dimen/dp_20"
+        style="@style/LinearLayoutStyle"
         >
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="@string/text_support"
             android:textColor="@color/tx_color"
-            android:textSize="@dimen/sp_16"
-            android:layout_marginStart="@dimen/dp_16"
-            android:layout_weight="1"/>
+            style="@style/TextViewStyle"/>
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:scaleType="center"
             android:src="@drawable/support"
-            android:foreground="?attr/selectableItemBackground"/>
+            style="@style/ImageViewStyle"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="@dimen/dp_45"
         android:layout_marginEnd="@dimen/dp_20"
+        style="@style/LinearLayoutStyle"
         >
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="@string/text_userallow"
             android:textColor="@color/tx_color"
-            android:textSize="@dimen/sp_16"
-            android:layout_marginStart="@dimen/dp_16"
-            android:layout_weight="1"/>
+            style="@style/TextViewStyle"/>
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:scaleType="center"
             android:src="@drawable/allow"
-            android:foreground="?attr/selectableItemBackground"/>
+            style="@style/ImageViewStyle"/>
     </LinearLayout>
 
 </LinearLayout>
