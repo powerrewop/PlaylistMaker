@@ -64,4 +64,6 @@
         <item name="android:textColor">@color/tx_color</item>
     </style>
 
+
+
 </resources>
