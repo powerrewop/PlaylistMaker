@@ -51,6 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="17pt"
             android:layout_weight="1"
+android:backgroundTint="?attr/colorPrimary"
 
             android:drawableStart="@drawable/search"
             android:drawableTint="?attr/colorPrimaryVariant"
@@ -72,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
-                />
+                app:tint="?attr/colorPrimaryVariant" />
     </LinearLayout>
 
 
