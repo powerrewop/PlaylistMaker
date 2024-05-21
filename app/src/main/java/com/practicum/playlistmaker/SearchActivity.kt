@@ -13,6 +13,15 @@ import android.widget.EditText
 import android.widget.ImageView
 
 class SearchActivity : AppCompatActivity() {
+
+    private var inputEditText: EditText? = null
+    private var userText: String = USER_INPUT_TEXT_DEF
+
+    companion object {
+        const val USER_INPUT_TEXT = "USER_INPUT_TEXT"
+        const val USER_INPUT_TEXT_DEF = ""
+    }
+
     @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +33,13 @@ class SearchActivity : AppCompatActivity() {
             startActivity(displayIntent)
         }
 
-        val inputEditText = findViewById<EditText>(R.id.inputEditText)
+        inputEditText = findViewById(R.id.inputEditText)
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
             clearButton.setOnClickListener {
-                inputEditText.setText("")
+                inputEditText?.setText("")
                 val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
+                inputMethodManager?.hideSoftInputFromWindow(inputEditText?.windowToken, 0)
             }
 
         val simpleTextWatcher = object : TextWatcher {
@@ -53,7 +62,26 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        inputEditText.addTextChangedListener(simpleTextWatcher)
+        inputEditText?.addTextChangedListener(simpleTextWatcher)
 
     }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        inputEditText = findViewById(R.id.inputEditText)
+        userText = inputEditText?.text.toString()
+        outState.putString(USER_INPUT_TEXT, userText)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+       inputEditText = findViewById(R.id.inputEditText)
+        userText = savedInstanceState.getString(USER_INPUT_TEXT, USER_INPUT_TEXT_DEF)
+        inputEditText?.setText(userText)
+
+    }
+
 }
