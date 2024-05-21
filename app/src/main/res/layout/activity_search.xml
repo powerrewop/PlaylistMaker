@@ -14,7 +14,7 @@
         >
 
         <ImageView
-            android:id="@+id/iv_back"
+            android:id="@+id/iv_searchBack"
             android:layout_gravity="center"
             android:src="@drawable/back"
             style="@style/ImageViewStyle2" />
@@ -46,26 +46,25 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittextform">
 
-        <EditText
-            android:id="@+id/inputEditText"
-            android:layout_width="0dp"
-            android:layout_height="17pt"
-            android:layout_weight="1"
-android:backgroundTint="?attr/colorPrimary"
+            <EditText
+                android:id="@+id/inputEditText"
+                android:layout_width="319dp"
+                android:layout_height="17pt"
+                android:layout_weight="1"
+                android:backgroundTint="?attr/colorPrimary"
 
-            android:drawableStart="@drawable/search"
-            android:drawableTint="?attr/colorPrimaryVariant"
-            android:paddingStart="10dp"
-            android:drawablePadding="10dp"
-            android:hint="@string/button_search"
-            android:inputType="text"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textColorHint="?attr/colorPrimaryVariant"
-            android:textSize="@dimen/sp_16"
-            tools:ignore="RtlSymmetry"
-            />
+                android:drawableStart="@drawable/search"
+                android:drawablePadding="10dp"
+                android:drawableTint="?attr/colorPrimaryVariant"
+                android:hint="@string/button_search"
+                android:inputType="text"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="?attr/colorPrimaryVariant"
+                android:textSize="@dimen/sp_16"
+                tools:ignore="RtlSymmetry" />
 
             <ImageView
                 android:id="@+id/clearIcon"
@@ -73,7 +72,8 @@ android:backgroundTint="?attr/colorPrimary"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
-                app:tint="?attr/colorPrimaryVariant" />
+                app:tint="?attr/colorPrimaryVariant"
+                android:visibility="gone"/>
     </LinearLayout>
 
 
