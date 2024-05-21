@@ -11,13 +11,14 @@
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_16"
         style="@style/LinearLayoutStyle"
-        >
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/iv_searchBack"
             android:layout_gravity="center"
             android:src="@drawable/back"
-            style="@style/ImageViewStyle2" />
+            style="@style/ImageViewStyle2"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,12 +45,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittextform">
+            android:background="@drawable/edittextform"
+            tools:ignore="UselessParent">
 
             <EditText
                 android:id="@+id/inputEditText"
-                android:layout_width="319dp"
-                android:layout_height="17pt"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:backgroundTint="?attr/colorPrimary"
 
@@ -64,7 +66,7 @@
                 android:textColor="@color/black"
                 android:textColorHint="?attr/colorPrimaryVariant"
                 android:textSize="@dimen/sp_16"
-                tools:ignore="RtlSymmetry" />
+                tools:ignore="Autofill,RtlSymmetry" />
 
             <ImageView
                 android:id="@+id/clearIcon"
