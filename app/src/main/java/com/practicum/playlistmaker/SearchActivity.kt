@@ -55,6 +55,8 @@ class SearchActivity : AppCompatActivity() {
                     clearButton.visibility = View.VISIBLE
                 }
 
+                userText = s.toString()
+
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -70,8 +72,6 @@ class SearchActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        inputEditText = findViewById(R.id.inputEditText)
-        userText = inputEditText?.text.toString()
         outState.putString(USER_INPUT_TEXT, userText)
     }
 
