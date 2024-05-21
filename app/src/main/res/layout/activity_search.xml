@@ -17,8 +17,7 @@
             android:id="@+id/iv_searchBack"
             android:layout_gravity="center"
             android:src="@drawable/back"
-            style="@style/ImageViewStyle2"
-            />
+            style="@style/ImageViewStyle2"/>
 
         <TextView
             android:layout_width="wrap_content"
