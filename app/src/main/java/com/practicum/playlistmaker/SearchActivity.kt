@@ -29,8 +29,8 @@ class SearchActivity : AppCompatActivity() {
 
         val ivSearchBack = findViewById<ImageView>(R.id.iv_searchBack)
         ivSearchBack.setOnClickListener {
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            finish()
+
         }
 
         inputEditText = findViewById(R.id.inputEditText)

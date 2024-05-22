@@ -16,8 +16,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val ivBack = findViewById<ImageView>(R.id.iv_back)
         ivBack.setOnClickListener {
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            finish()
         }
 
         val ivShare = findViewById<ImageView>(R.id.iv_share)
