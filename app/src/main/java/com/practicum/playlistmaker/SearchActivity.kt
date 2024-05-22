@@ -2,38 +2,32 @@ package com.practicum.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.core.view.isVisible
 
 class SearchActivity : AppCompatActivity() {
 
     private var inputEditText: EditText? = null
     private var userText: String = USER_INPUT_TEXT_DEF
 
-    companion object {
-        const val USER_INPUT_TEXT = "USER_INPUT_TEXT"
-        const val USER_INPUT_TEXT_DEF = ""
-    }
-
     @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        inputEditText = findViewById(R.id.inputEditText)
 
         val ivSearchBack = findViewById<ImageView>(R.id.iv_searchBack)
         ivSearchBack.setOnClickListener {
             finish()
 
         }
-
-        inputEditText = findViewById(R.id.inputEditText)
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
             clearButton.setOnClickListener {
@@ -49,11 +43,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                if (s.isNullOrEmpty()){
-                    clearButton.visibility = View.GONE
-                }else{
-                    clearButton.visibility = View.VISIBLE
-                }
+                clearButton.isVisible = !s.isNullOrEmpty()
 
                 userText = s.toString()
 
@@ -78,10 +68,13 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-       inputEditText = findViewById(R.id.inputEditText)
         userText = savedInstanceState.getString(USER_INPUT_TEXT, USER_INPUT_TEXT_DEF)
         inputEditText?.setText(userText)
 
+    }
+    companion object {
+        private const val USER_INPUT_TEXT = "USER_INPUT_TEXT"
+        private const val USER_INPUT_TEXT_DEF = ""
     }
 
 }
