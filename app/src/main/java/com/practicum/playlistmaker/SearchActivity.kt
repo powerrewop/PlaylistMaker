@@ -25,7 +25,7 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
 
         inputEditText = findViewById(R.id.inputEditText)
-        recycler = findViewById<RecyclerView>(R.id.musicList)
+        recycler = findViewById(R.id.musicList)
 
         val ivSearchBack = findViewById<ImageView>(R.id.iv_searchBack)
         ivSearchBack.setOnClickListener {

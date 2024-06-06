@@ -18,15 +18,16 @@
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:layout_marginStart="13dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:scaleType="centerCrop"
             />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/dp_8"
             android:orientation="vertical"
             tools:ignore="MissingConstraints"
             android:layout_weight="20">
@@ -61,7 +62,7 @@
                 android:text=""
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textFontWeight="400"
-                android:textSize="11sp"
+                android:textSize="@dimen/sp_11"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"/>
 
@@ -71,6 +72,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ellipse"
                     app:tint="?attr/colorSecondaryVariant"
+                    android:scaleType="centerCrop"
 
 
 
@@ -85,7 +87,7 @@
                     android:text=""
                     android:textColor="?attr/colorSecondaryVariant"
                     android:textFontWeight="400"
-                    android:textSize="11sp"
+                    android:textSize="@dimen/sp_11"
                     android:layout_marginStart="5dp"
                     android:layout_weight="0"
                     />
@@ -109,12 +111,13 @@
 
             <ImageView
                 android:id="@+id/sample_button"
-                android:layout_width="8dp"
+                android:layout_width="@dimen/dp_8"
                 android:layout_height="14dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:src="@drawable/sapmle_vector"
                 app:tint="?attr/colorSecondaryVariant"
+                android:scaleType="centerCrop"
 
                 />
 
