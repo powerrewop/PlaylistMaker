@@ -15,7 +15,6 @@
         <ImageView
             android:id="@+id/sample_iw"
             android:layout_gravity="center"
-            android:src="@drawable/back"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:layout_marginStart="13dp"
@@ -39,7 +38,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/ys_display_regular"
                 android:maxLines="1"
-                android:text="d1dfgdfg dgfdsfg dfgdfg dfgd dfgdfgh dfgdfgdfg"
+                android:text=""
                 android:textColor="?attr/colorSecondary"
                 android:textFontWeight="400"
                 android:textSize="@dimen/sp_16" />
@@ -59,11 +58,11 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:fontFamily="@font/ys_display_regular"
-                android:text="4564356456 dfgdfgdfg dfgdfg5 dfgdfgdfg dgrfdfgdfg dfgdfg dfgdfg"
+                android:text=""
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textFontWeight="400"
                 android:textSize="11sp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"/>
 
                 <ImageView
@@ -83,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:fontFamily="@font/ys_display_regular"
-                    android:text="5:05"
+                    android:text=""
                     android:textColor="?attr/colorSecondaryVariant"
                     android:textFontWeight="400"
                     android:textSize="11sp"
@@ -113,7 +112,7 @@
                 android:layout_width="8dp"
                 android:layout_height="14dp"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
                 android:src="@drawable/sapmle_vector"
                 app:tint="?attr/colorSecondaryVariant"
 
