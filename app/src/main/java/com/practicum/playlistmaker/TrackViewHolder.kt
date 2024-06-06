@@ -10,17 +10,20 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)  {
 
     private val trackName: TextView
     private val artistName: TextView
+    private val trackTime: TextView
     private val albumImage: ImageView
 
     init {
         trackName = itemView.findViewById(R.id.sample_bigtext)
         artistName = itemView.findViewById(R.id.sample_smalltext)
+        trackTime = itemView.findViewById(R.id.sample_tracklen)
         albumImage = itemView.findViewById(R.id.sample_iw)
     }
 
     fun bind(model: Track) {
         trackName.text = model.trackName
-        artistName.text = model.artistName + " * " + model.trackTime
+        artistName.text = model.artistName
+        trackTime.text = model.trackTime
         Glide.with(itemView).load(model.artworkUrl100).into(albumImage)
     }
 
