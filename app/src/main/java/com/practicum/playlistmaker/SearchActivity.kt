@@ -10,11 +10,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class SearchActivity : AppCompatActivity() {
 
     private var inputEditText: EditText? = null
     private var userText: String = USER_INPUT_TEXT_DEF
+    private var recycler: RecyclerView? = null
 
     @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +25,7 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
 
         inputEditText = findViewById(R.id.inputEditText)
+        recycler = findViewById<RecyclerView>(R.id.musicList)
 
         val ivSearchBack = findViewById<ImageView>(R.id.iv_searchBack)
         ivSearchBack.setOnClickListener {
@@ -55,6 +59,9 @@ class SearchActivity : AppCompatActivity() {
         }
 
         inputEditText?.addTextChangedListener(simpleTextWatcher)
+
+        recycler?.layoutManager = LinearLayoutManager(this)
+        recycler?.adapter = TrackAdapter(getTestVal())
 
     }
 

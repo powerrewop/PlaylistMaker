@@ -94,7 +94,8 @@
         android:id="@+id/musicList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_16"/>
+        android:layout_marginTop="@dimen/dp_16"
+        />
 
 
 </LinearLayout>
