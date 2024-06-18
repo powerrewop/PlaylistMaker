@@ -2,5 +2,7 @@
     <style name="Base.Theme.PlayListMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/for_textEditBack</item>
         <item name="colorPrimaryVariant">@color/for_textEditHint</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/for_textEditHint</item>
     </style>
 </resources>
