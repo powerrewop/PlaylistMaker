@@ -4,5 +4,6 @@
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/tx_color</item>
     </style>
 </resources>
