@@ -6,18 +6,38 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchActivity : AppCompatActivity() {
-
+    
     private var inputEditText: EditText? = null
     private var userText: String = USER_INPUT_TEXT_DEF
     private var recycler: RecyclerView? = null
+
+    private lateinit var problemLayout: LinearLayout
+    private lateinit var problemImage: ImageView
+    private lateinit var problemText: TextView
+    private lateinit var buttonUpdate: Button
+    private var tracks: MutableList<Track>? = mutableListOf()
+
+    private var baseUrlIyunes = "https://itunes.apple.com"
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(baseUrlIyunes)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    private val iTunesService = retrofit.create(ItunesApiService::class.java)
 
     @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,17 +47,32 @@ class SearchActivity : AppCompatActivity() {
         inputEditText = findViewById(R.id.inputEditText)
         recycler = findViewById(R.id.musicList)
 
+        problemLayout = findViewById(R.id.problem_layout)
+        problemImage = findViewById(R.id.problem_image)
+        problemText = findViewById(R.id.problem_text)
+        buttonUpdate = findViewById(R.id.button_update)
+
         val ivSearchBack = findViewById<ImageView>(R.id.iv_searchBack)
         ivSearchBack.setOnClickListener {
             finish()
 
         }
 
+        buttonUpdate.setOnClickListener{
+
+            startSearch()
+            visibleLayout(false)
+
+        }
+
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
             clearButton.setOnClickListener {
+
                 inputEditText?.setText("")
                 val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                 inputMethodManager?.hideSoftInputFromWindow(inputEditText?.windowToken, 0)
+                clearAdapter()
+                problemLayout.isVisible = false
             }
 
         val simpleTextWatcher = object : TextWatcher {
@@ -61,7 +96,19 @@ class SearchActivity : AppCompatActivity() {
         inputEditText?.addTextChangedListener(simpleTextWatcher)
 
         recycler?.layoutManager = LinearLayoutManager(this)
-        recycler?.adapter = TrackAdapter(getTestVal())
+
+
+        ///////////////////////////////////////////////////////////////
+        inputEditText?.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+
+                startSearch()
+
+                true
+            }
+            false
+        }
+        ///////////////////////////////////////////////////////////////
 
     }
 
@@ -82,6 +129,70 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         private const val USER_INPUT_TEXT = "USER_INPUT_TEXT"
         private const val USER_INPUT_TEXT_DEF = ""
+    }
+
+    private fun visibleLayout(stat: Boolean){
+        problemLayout.isVisible = stat
+        problemImage.isVisible = stat
+        problemText.isVisible = stat
+        buttonUpdate.isVisible = stat
+        recycler?.isVisible = !stat
+
+        problemText.setText(R.string.error_internet)
+        problemImage.setImageResource(R.drawable.error_internet)
+
+    }
+
+    private fun visibleLayoutEmpty(stat: Boolean){
+        problemLayout.isVisible = stat
+        problemImage.isVisible = stat
+        problemText.isVisible = stat
+        buttonUpdate.isVisible = !stat
+        recycler?.isVisible = !stat
+
+        problemText.setText(R.string.not_found)
+        problemImage.setImageResource(R.drawable.not_found)
+    }
+
+    private fun startSearch(){
+
+        iTunesService.search(userText).enqueue(object : retrofit2.Callback<ItunesDataModel>{
+            override fun onResponse(call: retrofit2.Call<ItunesDataModel>, response: retrofit2.Response<ItunesDataModel>) {
+
+                if (response.isSuccessful) {
+                    tracks = response.body()?.results
+
+                    if (tracks != null) {
+
+                        if(tracks!!.isNotEmpty()) {
+
+                            recycler?.adapter = TrackAdapter(tracks!!)
+                            visibleLayout(false)
+
+                        }else{
+                            visibleLayoutEmpty(true)
+                        }
+
+                    }
+
+                }else{
+
+                    visibleLayout(true)
+
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<ItunesDataModel>, t: Throwable) {
+
+                visibleLayout(true)
+            }
+        })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun clearAdapter(){
+        tracks?.clear()
+        recycler?.adapter?.notifyDataSetChanged()
     }
 
 }
