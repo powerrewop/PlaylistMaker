@@ -46,6 +46,7 @@
             />
 
         <Switch
+            android:id="@+id/sw_theme"
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
             android:layout_gravity="end"

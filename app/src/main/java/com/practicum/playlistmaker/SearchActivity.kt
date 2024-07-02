@@ -30,6 +30,11 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var problemText: TextView
     private lateinit var buttonUpdate: Button
     private var tracks: MutableList<Track>? = mutableListOf()
+    private var trAdapt: TrackAdapter? = null
+    private var historyText: TextView? = null
+    private var buttonHistoryClear: Button? = null
+
+    private var historyTrack: MutableList<Track>? = mutableListOf()
 
     private var baseUrlIyunes = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
@@ -51,6 +56,9 @@ class SearchActivity : AppCompatActivity() {
         problemImage = findViewById(R.id.problem_image)
         problemText = findViewById(R.id.problem_text)
         buttonUpdate = findViewById(R.id.button_update)
+        historyText = findViewById(R.id.text_history)
+        buttonHistoryClear = findViewById(R.id.button_history_clear)
+
 
         val ivSearchBack = findViewById<ImageView>(R.id.iv_searchBack)
         ivSearchBack.setOnClickListener {
@@ -65,6 +73,14 @@ class SearchActivity : AppCompatActivity() {
 
         }
 
+        buttonHistoryClear!!.setOnClickListener{
+
+            clearHistory((applicationContext as App))
+            hideHistoryElements()
+
+        }
+
+
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
             clearButton.setOnClickListener {
 
@@ -74,6 +90,11 @@ class SearchActivity : AppCompatActivity() {
                 clearAdapter()
                 problemLayout.isVisible = false
             }
+            //Focus
+            inputEditText?.setOnFocusChangeListener { view, hasFocus ->
+            val historyActive = if (hasFocus && inputEditText!!.text.isEmpty()) true else false
+            showHistory(historyActive)
+        }
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -85,6 +106,10 @@ class SearchActivity : AppCompatActivity() {
                 clearButton.isVisible = !s.isNullOrEmpty()
 
                 userText = s.toString()
+
+                //Focus
+                val historyActive = if (inputEditText!!.hasFocus() && s?.isEmpty() == true) true else false
+                showHistory(historyActive)
 
             }
 
@@ -166,7 +191,8 @@ class SearchActivity : AppCompatActivity() {
 
                         if(tracks!!.isNotEmpty()) {
 
-                            recycler?.adapter = TrackAdapter(tracks!!)
+                            adapterInit(tracks)
+
                             visibleLayout(false)
 
                         }else{
@@ -192,6 +218,47 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun clearAdapter(){
         tracks?.clear()
+        recycler?.adapter?.notifyDataSetChanged()
+    }
+    private fun adapterInit(adapterListTracks: MutableList<Track>?){
+
+        if (trAdapt == null)
+        {
+            trAdapt = TrackAdapter(adapterListTracks!!)
+            recycler?.adapter = trAdapt
+        }else {
+            trAdapt!!.updateTrack(adapterListTracks!!)
+            recycler?.adapter?.notifyDataSetChanged()
+        }
+    }
+
+    private fun showHistory(isActive: Boolean){
+
+        if(isActive){
+
+            historyTrack = getHistorySearch((applicationContext as App))
+
+            if(historyTrack!!.isNotEmpty()) {
+                historyText!!.isVisible = true
+                buttonHistoryClear!!.isVisible = true
+
+                adapterInit(historyTrack)
+
+            }
+
+        }else{
+
+            hideHistoryElements()
+
+        }
+
+    }
+
+    private fun hideHistoryElements(){
+
+        historyText!!.isVisible = false
+        buttonHistoryClear!!.isVisible = false
+        historyTrack?.clear()
         recycler?.adapter?.notifyDataSetChanged()
     }
 

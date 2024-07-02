@@ -1,18 +1,22 @@
 package com.practicum.playlistmaker
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Switch
 
 
 class SettingsActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        val myApp = (applicationContext as App)
 
         val ivBack = findViewById<ImageView>(R.id.iv_back)
         ivBack.setOnClickListener {
@@ -49,6 +53,18 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
+
+        val swTheme= findViewById<Switch>(R.id.sw_theme)
+        swTheme.isChecked = myApp.darkTheme
+        swTheme.setOnCheckedChangeListener { switcher, checked ->
+
+            myApp.switchTheme(checked)
+            myApp.sharedPrefs?.edit()
+                ?.putBoolean(THEME_SELECT, checked)
+                ?.apply()
+
+        }
+
 
 
     }
