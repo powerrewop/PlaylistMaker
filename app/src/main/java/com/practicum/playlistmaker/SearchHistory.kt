@@ -2,34 +2,33 @@ package com.practicum.playlistmaker
 
 import com.google.gson.Gson
 
-fun getHistorySearch(myApp: App): MutableList<Track>{
+fun getHistorySearch(myApp: App): MutableList<Track> {
 
     val arrayTrack = getDataSharedPrefs(myApp)
     return arrayTrack.asList().toMutableList()
 
 }
 
-fun saveHistorySearch(myApp: App, newElement: Track){
+fun saveHistorySearch(myApp: App, newElement: Track) {
 
     val oldArrayTrack = getDataSharedPrefs(myApp)
     val oldListTrack: MutableList<Track> = oldArrayTrack.toMutableList()
 
-    for(it in oldListTrack){
-        if (newElement.trackId == it.trackId){
+    for (it in oldListTrack) {
+        if (newElement.trackId == it.trackId) {
             oldListTrack.remove(it)
             break
         }
     }
 
-    oldListTrack.add(0,newElement)
+    oldListTrack.add(0, newElement)
 
-    var i = 1
-    oldListTrack.forEach{
-    if (i > 10){
-        oldListTrack.remove(it)
+    oldListTrack.forEachIndexed { index, track ->
+        if (index > 9) {
+            oldListTrack.remove(track)
+        }
     }
-    i++
-}
+
     val newArrayTrack = oldListTrack.toTypedArray()
 
     val json = Gson().toJson(newArrayTrack)
@@ -39,10 +38,10 @@ fun saveHistorySearch(myApp: App, newElement: Track){
 
 }
 
-fun getDataSharedPrefs(myApp: App): Array<Track>{
+fun getDataSharedPrefs(myApp: App): Array<Track> {
 
     val json = myApp.sharedPrefs?.getString(HISTORY_SEARCH, null) ?: return emptyArray<Track>()
-    var arrayTrack =  Gson().fromJson(json, Array<Track>::class.java)
+    var arrayTrack = Gson().fromJson(json, Array<Track>::class.java)
 
     arrayTrack.forEach {
         it.isHistory = true
@@ -52,7 +51,7 @@ fun getDataSharedPrefs(myApp: App): Array<Track>{
 
 }
 
-fun clearHistory(myApp: App){
+fun clearHistory(myApp: App) {
 
     val emptyArray = emptyArray<Track>()
     val json = Gson().toJson(emptyArray)

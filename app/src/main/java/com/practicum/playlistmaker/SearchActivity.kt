@@ -20,7 +20,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchActivity : AppCompatActivity() {
-    
+
     private var inputEditText: EditText? = null
     private var userText: String = USER_INPUT_TEXT_DEF
     private var recycler: RecyclerView? = null
@@ -66,14 +66,14 @@ class SearchActivity : AppCompatActivity() {
 
         }
 
-        buttonUpdate.setOnClickListener{
+        buttonUpdate.setOnClickListener {
 
             startSearch()
             visibleLayout(false)
 
         }
 
-        buttonHistoryClear!!.setOnClickListener{
+        buttonHistoryClear!!.setOnClickListener {
 
             clearHistory((applicationContext as App))
             hideHistoryElements()
@@ -82,16 +82,17 @@ class SearchActivity : AppCompatActivity() {
 
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-            clearButton.setOnClickListener {
+        clearButton.setOnClickListener {
 
-                inputEditText?.setText("")
-                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                inputMethodManager?.hideSoftInputFromWindow(inputEditText?.windowToken, 0)
-                clearAdapter()
-                problemLayout.isVisible = false
-            }
-            //Focus
-            inputEditText?.setOnFocusChangeListener { view, hasFocus ->
+            inputEditText?.setText("")
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(inputEditText?.windowToken, 0)
+            clearAdapter()
+            problemLayout.isVisible = false
+        }
+        //Focus
+        inputEditText?.setOnFocusChangeListener { view, hasFocus ->
             val historyActive = if (hasFocus && inputEditText!!.text.isEmpty()) true else false
             showHistory(historyActive)
         }
@@ -108,7 +109,8 @@ class SearchActivity : AppCompatActivity() {
                 userText = s.toString()
 
                 //Focus
-                val historyActive = if (inputEditText!!.hasFocus() && s?.isEmpty() == true) true else false
+                val historyActive =
+                    if (inputEditText!!.hasFocus() && s?.isEmpty() == true) true else false
                 showHistory(historyActive)
 
             }
@@ -151,12 +153,13 @@ class SearchActivity : AppCompatActivity() {
         inputEditText?.setText(userText)
 
     }
+
     companion object {
         private const val USER_INPUT_TEXT = "USER_INPUT_TEXT"
         private const val USER_INPUT_TEXT_DEF = ""
     }
 
-    private fun visibleLayout(stat: Boolean){
+    private fun visibleLayout(stat: Boolean) {
         problemLayout.isVisible = stat
         problemImage.isVisible = stat
         problemText.isVisible = stat
@@ -168,7 +171,7 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
-    private fun visibleLayoutEmpty(stat: Boolean){
+    private fun visibleLayoutEmpty(stat: Boolean) {
         problemLayout.isVisible = stat
         problemImage.isVisible = stat
         problemText.isVisible = stat
@@ -179,29 +182,32 @@ class SearchActivity : AppCompatActivity() {
         problemImage.setImageResource(R.drawable.not_found)
     }
 
-    private fun startSearch(){
+    private fun startSearch() {
 
-        iTunesService.search(userText).enqueue(object : retrofit2.Callback<ItunesDataModel>{
-            override fun onResponse(call: retrofit2.Call<ItunesDataModel>, response: retrofit2.Response<ItunesDataModel>) {
+        iTunesService.search(userText).enqueue(object : retrofit2.Callback<ItunesDataModel> {
+            override fun onResponse(
+                call: retrofit2.Call<ItunesDataModel>,
+                response: retrofit2.Response<ItunesDataModel>
+            ) {
 
                 if (response.isSuccessful) {
                     tracks = response.body()?.results
 
                     if (tracks != null) {
 
-                        if(tracks!!.isNotEmpty()) {
+                        if (tracks!!.isNotEmpty()) {
 
                             adapterInit(tracks)
 
                             visibleLayout(false)
 
-                        }else{
+                        } else {
                             visibleLayoutEmpty(true)
                         }
 
                     }
 
-                }else{
+                } else {
 
                     visibleLayout(true)
 
@@ -216,39 +222,39 @@ class SearchActivity : AppCompatActivity() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun clearAdapter(){
+    private fun clearAdapter() {
         tracks?.clear()
         recycler?.adapter?.notifyDataSetChanged()
     }
-    private fun adapterInit(adapterListTracks: MutableList<Track>?){
 
-        if (trAdapt == null)
-        {
+    private fun adapterInit(adapterListTracks: MutableList<Track>?) {
+
+        if (trAdapt == null) {
             trAdapt = TrackAdapter(adapterListTracks!!)
             recycler?.adapter = trAdapt
-        }else {
+        } else {
             trAdapt!!.updateTrack(adapterListTracks!!)
             recycler?.adapter?.notifyDataSetChanged()
         }
     }
 
-    private fun showHistory(isActive: Boolean){
+    private fun showHistory(isActive: Boolean) {
 
-        if(isActive){
+        if (isActive) {
 
             historyTrack = getHistorySearch((applicationContext as App))
 
-            if(historyTrack!!.isNotEmpty()) {
+            if (historyTrack!!.isNotEmpty()) {
                 historyText!!.isVisible = true
                 buttonHistoryClear!!.isVisible = true
 
                 adapterInit(historyTrack)
 
-            }else{
+            } else {
                 hideHistoryElements()
             }
 
-        }else{
+        } else {
 
             hideHistoryElements()
 
@@ -256,7 +262,7 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
-    private fun hideHistoryElements(){
+    private fun hideHistoryElements() {
 
         historyText!!.isVisible = false
         buttonHistoryClear!!.isVisible = false
