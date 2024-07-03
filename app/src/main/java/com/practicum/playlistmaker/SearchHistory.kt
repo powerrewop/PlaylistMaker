@@ -14,19 +14,24 @@ fun saveHistorySearch(myApp: App, newElement: Track) {
     val oldArrayTrack = getDataSharedPrefs(myApp)
     val oldListTrack: MutableList<Track> = oldArrayTrack.toMutableList()
 
-    for (it in oldListTrack) {
-        if (newElement.trackId == it.trackId) {
-            oldListTrack.remove(it)
-            break
+    var iterator = oldListTrack.iterator()
+    while (iterator.hasNext()){
+        val track = iterator.next()
+        if (newElement.trackId == track.trackId){
+            iterator.remove()
         }
     }
 
     oldListTrack.add(0, newElement)
 
-    oldListTrack.forEachIndexed { index, track ->
-        if (index > 9) {
-            oldListTrack.remove(track)
+    var i = 1
+    var iterator2 = oldListTrack.iterator()
+    while (iterator2.hasNext()){
+        iterator2.next()
+        if (i > 10) {
+            iterator2.remove()
         }
+        i++
     }
 
     val newArrayTrack = oldListTrack.toTypedArray()
