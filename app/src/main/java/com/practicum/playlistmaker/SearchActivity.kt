@@ -244,6 +244,8 @@ class SearchActivity : AppCompatActivity() {
 
                 adapterInit(historyTrack)
 
+            }else{
+                hideHistoryElements()
             }
 
         }else{
@@ -258,8 +260,8 @@ class SearchActivity : AppCompatActivity() {
 
         historyText!!.isVisible = false
         buttonHistoryClear!!.isVisible = false
-        historyTrack?.clear()
-        recycler?.adapter?.notifyDataSetChanged()
+        trAdapt?.updateTrack(emptyList<Track>())
+        trAdapt?.notifyDataSetChanged()
     }
 
 }

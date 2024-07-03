@@ -8,4 +8,5 @@ data class Track(
     @SerializedName("trackTimeMillis") var trackTime: Int,
     var artworkUrl100: String,
     var trackId: Long,
+    var isHistory: Boolean = false
 )

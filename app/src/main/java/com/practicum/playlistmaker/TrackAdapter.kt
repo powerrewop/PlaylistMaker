@@ -24,6 +24,11 @@ class TrackAdapter(
                     trackList[position]
                 )
 
+            if (trackList[position].isHistory) {
+                    trackList = getHistorySearch(holder.itemView.context.applicationContext as App)
+                    notifyDataSetChanged()
+            }
+
         }
     }
 

@@ -14,9 +14,10 @@ fun saveHistorySearch(myApp: App, newElement: Track){
     val oldArrayTrack = getDataSharedPrefs(myApp)
     val oldListTrack: MutableList<Track> = oldArrayTrack.toMutableList()
 
-    oldListTrack.forEach{
+    for(it in oldListTrack){
         if (newElement.trackId == it.trackId){
             oldListTrack.remove(it)
+            break
         }
     }
 
@@ -41,7 +42,13 @@ fun saveHistorySearch(myApp: App, newElement: Track){
 fun getDataSharedPrefs(myApp: App): Array<Track>{
 
     val json = myApp.sharedPrefs?.getString(HISTORY_SEARCH, null) ?: return emptyArray<Track>()
-    return Gson().fromJson(json, Array<Track>::class.java)
+    var arrayTrack =  Gson().fromJson(json, Array<Track>::class.java)
+
+    arrayTrack.forEach {
+        it.isHistory = true
+    }
+
+    return arrayTrack
 
 }
 
