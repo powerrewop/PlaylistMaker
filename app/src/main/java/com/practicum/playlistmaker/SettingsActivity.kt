@@ -11,7 +11,6 @@ import android.widget.Switch
 class SettingsActivity : AppCompatActivity() {
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -24,7 +23,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val ivShare = findViewById<ImageView>(R.id.iv_share)
-        ivShare.setOnClickListener{
+        ivShare.setOnClickListener {
 
             val actionShare = Intent(Intent.ACTION_SEND)
             actionShare.putExtra(Intent.EXTRA_TEXT, getString(R.string.link_YP))
@@ -35,7 +34,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val ivSupport = findViewById<ImageView>(R.id.iv_support)
-        ivSupport.setOnClickListener{
+        ivSupport.setOnClickListener {
 
             val emailIntent = Intent(Intent.ACTION_SENDTO)
             emailIntent.data = Uri.parse("mailto:")
@@ -47,14 +46,14 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val ivAllow = findViewById<ImageView>(R.id.iv_allow)
-        ivAllow.setOnClickListener{
+        ivAllow.setOnClickListener {
             val url = Uri.parse(getString(R.string.legal_YP))
             val intent = Intent(Intent.ACTION_VIEW, url)
             startActivity(intent)
 
         }
 
-        val swTheme= findViewById<Switch>(R.id.sw_theme)
+        val swTheme = findViewById<Switch>(R.id.sw_theme)
         swTheme.isChecked = myApp.darkTheme
         swTheme.setOnCheckedChangeListener { switcher, checked ->
 
@@ -64,7 +63,6 @@ class SettingsActivity : AppCompatActivity() {
                 ?.apply()
 
         }
-
 
 
     }
