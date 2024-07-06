@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.util.Locale
 
-class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)  {
+class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val trackName: TextView
     private val artistName: TextView
@@ -28,13 +28,8 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)  {
         artistName.text = model.artistName
         trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
 
-        Glide
-            .with(itemView)
-            .load(model.artworkUrl100)
-            .placeholder(R.drawable.empty_image)
-            .centerCrop()
-            .transform(RoundedCorners(2))
-            .into(albumImage)
+        Glide.with(itemView).load(model.artworkUrl100).placeholder(R.drawable.empty_image)
+            .centerCrop().transform(RoundedCorners(2)).into(albumImage)
     }
 
 }

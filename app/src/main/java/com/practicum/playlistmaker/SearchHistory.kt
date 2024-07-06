@@ -15,9 +15,9 @@ fun saveHistorySearch(myApp: App, newElement: Track) {
     val oldListTrack: MutableList<Track> = oldArrayTrack.toMutableList()
 
     var iterator = oldListTrack.iterator()
-    while (iterator.hasNext()){
+    while (iterator.hasNext()) {
         val track = iterator.next()
-        if (newElement.trackId == track.trackId){
+        if (newElement.trackId == track.trackId) {
             iterator.remove()
         }
     }
@@ -26,7 +26,7 @@ fun saveHistorySearch(myApp: App, newElement: Track) {
 
     var i = 1
     var iterator2 = oldListTrack.iterator()
-    while (iterator2.hasNext()){
+    while (iterator2.hasNext()) {
         iterator2.next()
         if (i > 10) {
             iterator2.remove()

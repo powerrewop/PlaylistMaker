@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 const val PLM_PREFERENCES_1 = "plm_preferences_1"
 const val THEME_SELECT = "select_day_night_theme"
 const val HISTORY_SEARCH = "user_history_search"
+
 class App : Application() {
 
     var darkTheme = false
