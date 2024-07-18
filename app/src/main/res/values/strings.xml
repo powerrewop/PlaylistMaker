@@ -18,5 +18,10 @@
     <string name="base_url_search">https://itunes.apple.com</string>
     <string name="text_history_search">Вы искали</string>
     <string name="text_history_clear">Очистить историю</string>
+    <string name="text_track_lenght">Длительность</string>
+    <string name="text_track_album">Альбом</string>
+    <string name="text_track_year">Год</string>
+    <string name="text_track_genre">Жанр</string>
+    <string name="text_track_country">Страна</string>
 </resources>
 
