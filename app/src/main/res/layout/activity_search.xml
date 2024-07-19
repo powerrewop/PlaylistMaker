@@ -72,7 +72,7 @@
                 android:textColorHint="?attr/colorPrimaryVariant"
                 android:textFontWeight="400"
                 android:textSize="@dimen/sp_16"
-                tools:ignore="Autofill,RtlSymmetry" />
+                tools:ignore="Autofill,RtlSymmetry"/>
 
             <ImageView
                 android:id="@+id/clearIcon"

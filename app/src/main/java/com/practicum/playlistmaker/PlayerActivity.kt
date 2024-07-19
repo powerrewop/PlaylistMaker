@@ -58,12 +58,12 @@ class PlayerActivity : AppCompatActivity() {
 
 
 
-        Glide.with(this).load(track.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg")).placeholder(R.drawable.empty_image)
+        Glide.with(this).load(track.artworkUrl100?.replaceAfterLast('/',"512x512bb.jpg")).placeholder(R.drawable.empty_image)
             .centerCrop().transform(RoundedCorners(8)).into(iv_banner)
 
         tv_trackName.text = track.trackName
 
-        if(track.collectionName.isEmpty()){
+        if(track.collectionName?.isEmpty() == true){
             tv_trackAlbum.isVisible = false
             tv_trackAlbumHead.isVisible = false
             tv_trackAlbumInfo.isVisible = false
@@ -71,10 +71,8 @@ class PlayerActivity : AppCompatActivity() {
             tv_trackAlbum.isVisible = true
             tv_trackAlbumHead.isVisible = true
             tv_trackAlbumInfo.isVisible = true
-
             tv_trackAlbum.text = track.collectionName
             tv_trackAlbumInfo.text = track.collectionName
-
         }
 
         tv_trackLenPlay.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTime)

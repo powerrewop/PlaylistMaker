@@ -41,11 +41,12 @@
         <ImageView
             android:id="@+id/iv_playerBack"
             style="@style/ImageViewStyle2"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
             android:src="@drawable/back"
-            app:layout_constraintStart_toStartOf="@id/leftBorder"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -61,7 +62,7 @@
 
         <TextView
             android:id="@+id/tv_nameTrack"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/ys_display_medium"
@@ -70,11 +71,14 @@
             android:textFontWeight="400"
             android:textSize="@dimen/sp_22"
             app:layout_constraintStart_toStartOf="@id/leftBorder"
-            app:layout_constraintTop_toBottomOf="@id/iv_playerBanner" />
+            app:layout_constraintTop_toBottomOf="@id/iv_playerBanner"
+            app:layout_constraintEnd_toEndOf="@id/rightBorder"
+            app:layout_constraintHorizontal_bias="0"
+            />
 
         <TextView
             android:id="@+id/tv_nameAlbum"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/ys_display_medium"
@@ -84,7 +88,9 @@
             android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="@id/leftBorder"
-            app:layout_constraintTop_toBottomOf="@id/tv_nameTrack" />
+            app:layout_constraintTop_toBottomOf="@id/tv_nameTrack"
+            app:layout_constraintEnd_toEndOf="@id/rightBorder"
+            app:layout_constraintHorizontal_bias="0"/>
 
 
         <ImageView
@@ -182,7 +188,7 @@
 
         <TextView
             android:id="@+id/tv_track_album_data"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
             android:fontFamily="@font/ys_text_regular"
@@ -190,11 +196,13 @@
             android:textColor="?attr/colorSecondary"
             android:textFontWeight="400"
             android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_track_len_data"
+            app:layout_constraintStart_toEndOf="@id/tv_track_album"
             app:layout_constraintEnd_toEndOf="@id/smallrightBorder"
             app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@id/tv_track_album"
-            app:layout_constraintTop_toBottomOf="@id/tv_track_len_data"
+            android:layout_marginStart="@dimen/dp_10"
             android:visibility="visible"
+            android:textAlignment="textEnd"
 
             />
 
