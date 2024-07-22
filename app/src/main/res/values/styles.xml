@@ -44,8 +44,8 @@
     </style>
 
     <style name="ImageViewStyle2">
-        <item name="android:layout_width">@dimen/dp_24</item>
-        <item name="android:layout_height">@dimen/dp_24</item>
+        <item name="android:layout_width">@dimen/dp_16</item>
+        <item name="android:layout_height">@dimen/dp_16</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:tint">@color/tx_color</item>
@@ -63,7 +63,5 @@
     <style name="mySetTextColor">
         <item name="android:textColor">@color/tx_color</item>
     </style>
-
-
 
 </resources>
