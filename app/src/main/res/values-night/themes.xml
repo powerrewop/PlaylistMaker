@@ -5,5 +5,6 @@
         <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/tx_color</item>
+        <item name="colorAccent">@color/for_cursor</item>
     </style>
 </resources>

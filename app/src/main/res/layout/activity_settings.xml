@@ -8,8 +8,8 @@
 
     <LinearLayout
         style="@style/LinearLayoutStyle"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
