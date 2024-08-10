@@ -23,5 +23,6 @@
     <string name="text_track_year">Год</string>
     <string name="text_track_genre">Жанр</string>
     <string name="text_track_country">Страна</string>
+    <string name="track_timer_start">00:00</string>
 </resources>
 

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
@@ -12,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +27,15 @@ class SearchActivity : AppCompatActivity() {
     private var inputEditText: EditText? = null
     private var userText: String = USER_INPUT_TEXT_DEF
     private var recycler: RecyclerView? = null
+    private val handler = Handler(Looper.getMainLooper())
 
     private lateinit var problemLayout: LinearLayout
     private lateinit var problemImage: ImageView
     private lateinit var problemText: TextView
     private lateinit var buttonUpdate: Button
+    private lateinit var layoutProgressBar: LinearLayout
+    private lateinit var layoutRV: LinearLayout
+
     private var tracks: MutableList<Track>? = mutableListOf()
     private var trAdapt: TrackAdapter? = null
     private var historyText: TextView? = null
@@ -58,6 +65,8 @@ class SearchActivity : AppCompatActivity() {
         buttonUpdate = findViewById(R.id.button_update)
         historyText = findViewById(R.id.text_history)
         buttonHistoryClear = findViewById(R.id.button_history_clear)
+        layoutProgressBar = findViewById(R.id.progressBar_layout)
+        layoutRV = findViewById(R.id.rv_layout)
 
 
         val ivSearchBack = findViewById<ImageView>(R.id.iv_searchBack)
@@ -68,7 +77,7 @@ class SearchActivity : AppCompatActivity() {
 
         buttonUpdate.setOnClickListener {
 
-            startSearch()
+            startSearch(userText)
             visibleLayout(false)
 
         }
@@ -113,6 +122,8 @@ class SearchActivity : AppCompatActivity() {
                     if (inputEditText!!.hasFocus() && s?.isEmpty() == true) true else false
                 showHistory(historyActive)
 
+                startSearch(userText)
+
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -124,18 +135,6 @@ class SearchActivity : AppCompatActivity() {
 
         recycler?.layoutManager = LinearLayoutManager(this)
 
-
-        ///////////////////////////////////////////////////////////////
-        inputEditText?.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-
-                startSearch()
-
-                true
-            }
-            false
-        }
-        ///////////////////////////////////////////////////////////////
 
     }
 
@@ -157,6 +156,7 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         private const val USER_INPUT_TEXT = "USER_INPUT_TEXT"
         private const val USER_INPUT_TEXT_DEF = ""
+        private const val USER_INPUT_DELAY = 2000L
     }
 
     private fun visibleLayout(stat: Boolean) {
@@ -182,43 +182,67 @@ class SearchActivity : AppCompatActivity() {
         problemImage.setImageResource(R.drawable.not_found)
     }
 
-    private fun startSearch() {
+    private fun startSearch(searchString: String) {
 
-        iTunesService.search(userText).enqueue(object : retrofit2.Callback<ItunesDataModel> {
-            override fun onResponse(
-                call: retrofit2.Call<ItunesDataModel>,
-                response: retrofit2.Response<ItunesDataModel>
-            ) {
+        if (searchString.isNotEmpty() && searchString.length > 2) {
+            val searchRunnable = Runnable {
 
-                if (response.isSuccessful) {
-                    tracks = response.body()?.results
+                layoutProgressBar.isVisible = true
+                layoutRV.isVisible = false
+                problemLayout.isVisible = false
 
-                    if (tracks != null) {
+                iTunesService.search(searchString)
+                    .enqueue(object : retrofit2.Callback<ItunesDataModel> {
+                        override fun onResponse(
+                            call: retrofit2.Call<ItunesDataModel>,
+                            response: retrofit2.Response<ItunesDataModel>
+                        ) {
 
-                        if (tracks!!.isNotEmpty()) {
+                            layoutProgressBar.isVisible = false
+                            layoutRV.isVisible = true
+                            problemLayout.isVisible = true
 
-                            adapterInit(tracks)
+                            if (response.isSuccessful) {
+                                tracks = response.body()?.results
 
-                            visibleLayout(false)
+                                if (tracks != null) {
 
-                        } else {
-                            visibleLayoutEmpty(true)
+                                    if (tracks!!.isNotEmpty()) {
+
+                                        adapterInit(tracks)
+
+                                        visibleLayout(false)
+
+                                    } else {
+                                        visibleLayoutEmpty(true)
+                                    }
+
+                                }
+
+                            } else {
+
+                                visibleLayout(true)
+
+                            }
+
+
                         }
 
-                    }
+                        override fun onFailure(
+                            call: retrofit2.Call<ItunesDataModel>,
+                            t: Throwable
+                        ) {
 
-                } else {
+                            visibleLayout(true)
+                        }
+                    })
 
-                    visibleLayout(true)
-
-                }
             }
 
-            override fun onFailure(call: retrofit2.Call<ItunesDataModel>, t: Throwable) {
+            handler.removeCallbacks(searchRunnable)
+            handler.postDelayed(searchRunnable, USER_INPUT_DELAY)
+        }
 
-                visibleLayout(true)
-            }
-        })
     }
 
     @SuppressLint("NotifyDataSetChanged")
