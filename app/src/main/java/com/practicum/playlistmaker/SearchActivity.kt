@@ -268,7 +268,7 @@ class SearchActivity : AppCompatActivity() {
 
             historyTrack = getHistorySearch((applicationContext as App))
 
-            if (historyTrack!!.isNotEmpty()) {
+            if ((historyTrack!!.isNotEmpty()) && (historyTrack!!.size > 0)){
                 historyText!!.isVisible = true
                 buttonHistoryClear!!.isVisible = true
 
