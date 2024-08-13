@@ -2,6 +2,8 @@ package com.practicum.playlistmaker
 
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
@@ -11,6 +13,9 @@ import com.google.gson.Gson
 class TrackAdapter(
     private var trackList: List<Track>
 ) : RecyclerView.Adapter<TrackViewHolder>() {
+
+    private var isClickAllowed = true
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view =
@@ -28,10 +33,17 @@ class TrackAdapter(
                 trackList[position]
             )
 
-            val json = Gson().toJson(trackList[position])
-            val displayIntent = Intent(holder.itemView.context, PlayerActivity::class.java)
-            displayIntent.putExtra("TrackData", json)
-            holder.itemView.context.startActivity(displayIntent)
+            if (isClickAllowed) {
+
+                isClickAllowed = false
+                val json = Gson().toJson(trackList[position])
+                val displayIntent = Intent(holder.itemView.context, PlayerActivity::class.java)
+                displayIntent.putExtra("TrackData", json)
+                holder.itemView.context.startActivity(displayIntent)
+
+                handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+
+            }
 
             if (trackList[position].isHistory) {
                 trackList = getHistorySearch(holder.itemView.context.applicationContext as App)
@@ -47,5 +59,8 @@ class TrackAdapter(
         trackList = newTrackList
     }
 
+    companion object{
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
 
 }
