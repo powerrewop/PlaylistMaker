@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.SearchActivity
 import com.practicum.playlistmaker.domain.storage.IntentUser
+import com.practicum.playlistmaker.presentation.MediaActivity
+import com.practicum.playlistmaker.presentation.SettingsActivity
 
 class IntentUserImpl(override val context: Context) : IntentUser {
     override fun getSend(): Intent {
@@ -28,5 +31,17 @@ class IntentUserImpl(override val context: Context) : IntentUser {
         val url = Uri.parse(context.getString(R.string.legal_YP))
         val intent = Intent(Intent.ACTION_VIEW, url)
         return intent
+    }
+
+    override fun getSearchActivity(): Intent {
+        return Intent(context, SearchActivity::class.java)
+    }
+
+    override fun getMediaActivity(): Intent {
+        return Intent(context, MediaActivity::class.java)
+    }
+
+    override fun getSettingsActivity(): Intent {
+        return Intent(context, SettingsActivity::class.java)
     }
 }
