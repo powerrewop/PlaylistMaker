@@ -1,6 +1,6 @@
-package com.practicum.playlistmaker.domain
+package com.practicum.playlistmaker.domain.usecase
 
-import com.practicum.playlistmaker.domain.storage.AppThemeChange
+import com.practicum.playlistmaker.domain.storage.interfaces.AppThemeChange
 
 
 class ChangeAppThemeUseCase(private val appThemeChange: AppThemeChange) {

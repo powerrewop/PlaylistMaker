@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Switch
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.creator.SettingsUseCaseCreator
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -17,8 +18,8 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
-        val useCaseCreator = UseCaseCreator(context = applicationContext)
-        val selectIntent = useCaseCreator.getSelectIntentUser()
+        val settingsUseCaseCreator = SettingsUseCaseCreator(context = applicationContext)
+        val selectIntent = settingsUseCaseCreator.getSelectIntentUser()
 
         val ivShare = findViewById<ImageView>(R.id.iv_share)
         ivShare.setOnClickListener {
@@ -37,9 +38,9 @@ class SettingsActivity : AppCompatActivity() {
 
         val swTheme = findViewById<Switch>(R.id.sw_theme)
 
-        val getAppThemeUseCase = useCaseCreator.getAppThemeUseCase()
-        val saveAppThemeUseCase = useCaseCreator.getSaveAppThemeUseCase()
-        val changeAppThemeUseCase = useCaseCreator.getChangeAppThemeUseCase()
+        val getAppThemeUseCase = settingsUseCaseCreator.getAppThemeUseCase()
+        val saveAppThemeUseCase = settingsUseCaseCreator.getSaveAppThemeUseCase()
+        val changeAppThemeUseCase = settingsUseCaseCreator.getChangeAppThemeUseCase()
         swTheme.isChecked = getAppThemeUseCase.get()
 
         swTheme.setOnCheckedChangeListener { switcher, checked ->

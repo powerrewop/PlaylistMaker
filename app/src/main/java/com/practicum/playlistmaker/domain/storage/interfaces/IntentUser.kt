@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.domain.storage
+package com.practicum.playlistmaker.domain.storage.interfaces
 
 import android.content.Context
 import android.content.Intent

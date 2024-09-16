@@ -1,7 +1,7 @@
 package com.practicum.playlistmaker.data.storage
 
 import android.content.SharedPreferences
-import com.practicum.playlistmaker.domain.storage.AppThemeStorage
+import com.practicum.playlistmaker.domain.storage.interfaces.AppThemeStorage
 
 const val THEME_SELECT = "select_day_night_theme"
 class AppThemeStorageImpl(private val sharedPrefs: SharedPreferences): AppThemeStorage {

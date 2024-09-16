@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.SearchActivity
-import com.practicum.playlistmaker.domain.storage.IntentUser
+import com.practicum.playlistmaker.domain.storage.interfaces.IntentUser
 import com.practicum.playlistmaker.presentation.MediaActivity
 import com.practicum.playlistmaker.presentation.SettingsActivity
 

@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker
 
 import com.google.gson.Gson
+import com.practicum.playlistmaker.domain.model.Track
 
 fun getHistorySearch(myApp: App): MutableList<Track> {
 

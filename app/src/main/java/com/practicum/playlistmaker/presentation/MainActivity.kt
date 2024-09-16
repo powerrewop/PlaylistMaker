@@ -4,14 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.creator.SettingsUseCaseCreator
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val useCaseCreator = UseCaseCreator(context = applicationContext)
-        val selectIntent = useCaseCreator.getSelectIntentUser()
+        val settingsUseCaseCreator = SettingsUseCaseCreator(context = applicationContext)
+        val selectIntent = settingsUseCaseCreator.getSelectIntentUser()
 
         val btSearch = findViewById<Button>(R.id.bt_search)
         btSearch.setOnClickListener {

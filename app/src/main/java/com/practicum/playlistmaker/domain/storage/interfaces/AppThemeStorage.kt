@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.domain.storage
+package com.practicum.playlistmaker.domain.storage.interfaces
 
 interface AppThemeStorage {
     fun get(): Boolean
