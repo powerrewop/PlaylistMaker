@@ -1,12 +1,15 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.data.storage
 
 import com.google.gson.Gson
+import com.practicum.playlistmaker.data.App
+import com.practicum.playlistmaker.data.HISTORY_SEARCH
 import com.practicum.playlistmaker.domain.model.Track
 
-fun getHistorySearch(myApp: App): MutableList<Track> {
+fun getHistorySearch(myApp: App): List<Track> {
 
     val arrayTrack = getDataSharedPrefs(myApp)
-    return arrayTrack.asList().toMutableList()
+    //return arrayTrack.asList().toMutableList()
+    return arrayTrack.toList()
 
 }
 

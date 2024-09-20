@@ -1,5 +1,6 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.data
 
+import com.practicum.playlistmaker.data.model.ItunesDataModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

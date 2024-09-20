@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.SearchActivity
+import com.practicum.playlistmaker.presentation.activitys.SearchActivityNew
 import com.practicum.playlistmaker.domain.storage.interfaces.IntentUser
-import com.practicum.playlistmaker.presentation.MediaActivity
-import com.practicum.playlistmaker.presentation.SettingsActivity
+import com.practicum.playlistmaker.presentation.activitys.MediaActivity
+import com.practicum.playlistmaker.presentation.activitys.SettingsActivity
 
-class IntentUserImpl(override val context: Context) : IntentUser {
+class IntentUserImpl(private val context: Context) : IntentUser {
     override fun getSend(): Intent {
         val actionShare = Intent(Intent.ACTION_SEND)
         actionShare.putExtra(Intent.EXTRA_TEXT, context.getString(R.string.link_YP))
@@ -34,7 +34,7 @@ class IntentUserImpl(override val context: Context) : IntentUser {
     }
 
     override fun getSearchActivity(): Intent {
-        return Intent(context, SearchActivity::class.java)
+        return Intent(context, SearchActivityNew::class.java)
     }
 
     override fun getMediaActivity(): Intent {

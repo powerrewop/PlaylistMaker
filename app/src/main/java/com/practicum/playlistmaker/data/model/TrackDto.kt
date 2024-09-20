@@ -10,7 +10,7 @@ class TrackDto (
     var trackId: Long,
     var isHistory: Boolean = false,
     var collectionName: String?,
-    var releaseDate: String,
+    var releaseDate: String?,
     var primaryGenreName: String,
     var country: String,
     var previewUrl: String?

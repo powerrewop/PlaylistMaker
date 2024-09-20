@@ -23,7 +23,10 @@ class OptionsPlayerActivity {
         return SimpleDateFormat("mm:ss", Locale.getDefault()).format(timeTrack)
     }
 
-    fun getYear(date: String): String{
-        return date.substring(0, 4)
+    fun getYear(date: String?): String{
+        if (date != null) {
+            return date.substring(0, 4)
+        }
+        return ""
     }
 }
