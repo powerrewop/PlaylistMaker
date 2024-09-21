@@ -1,5 +1,6 @@
 package com.practicum.playlistmaker.presentation
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -108,6 +109,7 @@ class OptionsSearchActivity(
         recycler?.isVisible = true
         layoutProgressBar.isVisible = false
     }
+    @SuppressLint("SuspiciousIndentation")
     fun setFocus(hasFocus: Boolean, tracks: List<Track>?){
         layoutProgressBar.isVisible = false
         var historyActive = false;
