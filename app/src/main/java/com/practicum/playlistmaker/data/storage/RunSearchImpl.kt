@@ -16,7 +16,7 @@ private const val USER_INPUT_DELAY = 2000L
 class RunSearchImpl(private val baseUrlIyunes: String): RunSearch {
 
     lateinit var onBack: (List<Track>?, Int) -> Unit //Тут метод который вызову для передачи результата
-
+    lateinit var onProgressBar: () -> Unit //Тут метод который включит прогресс бар
     //"https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrlIyunes)
@@ -33,6 +33,7 @@ class RunSearchImpl(private val baseUrlIyunes: String): RunSearch {
     private val searchRunnable: Runnable = Runnable {
         executor.execute {
             try {
+                onProgressBar.invoke() //включаем прогресс бар
                 val resp = iTunesService.search(userTextSearch).execute()
                 tracksDto = resp.body()?.results
                 tracks = tracksDto?.map {

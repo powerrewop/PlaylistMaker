@@ -1,5 +1,7 @@
 package com.practicum.playlistmaker.presentation.activitys
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -19,21 +21,32 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val settingsUseCaseCreator = SettingsUseCaseCreator(context = applicationContext)
-        val selectIntent = settingsUseCaseCreator.getSelectIntentUser()
+
 
         val ivShare = findViewById<ImageView>(R.id.iv_share)
         ivShare.setOnClickListener {
-            startActivity(selectIntent.getSend())
+            val actionShare = Intent(Intent.ACTION_SEND)
+            actionShare.putExtra(Intent.EXTRA_TEXT, getString(R.string.link_YP))
+            actionShare.type = "text/x-uri"
+            val shareLink = Intent.createChooser(actionShare, null)
+            startActivity(shareLink)
         }
 
         val ivSupport = findViewById<ImageView>(R.id.iv_support)
         ivSupport.setOnClickListener {
-            startActivity(selectIntent.getSendTo())
+            val emailIntent = Intent(Intent.ACTION_SENDTO)
+            emailIntent.data = Uri.parse("mailto:")
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.student_email)))
+            emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.text2))
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.text1))
+            startActivity(emailIntent)
         }
 
         val ivAllow = findViewById<ImageView>(R.id.iv_allow)
         ivAllow.setOnClickListener {
-            startActivity(selectIntent.getView())
+            val url = Uri.parse(getString(R.string.legal_YP))
+            val intent = Intent(Intent.ACTION_VIEW, url)
+            startActivity(intent)
         }
 
         val swTheme = findViewById<Switch>(R.id.sw_theme)

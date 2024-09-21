@@ -3,6 +3,8 @@ package com.practicum.playlistmaker.presentation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -33,6 +35,7 @@ class OptionsSearchActivity(
 ) {
 
     private var hsActive = false
+   // private val handler = Handler(Looper.getMainLooper())
     fun adapterInit(adapterListTracks: List<Track>?) {
         if (trAdapt == null) {
             trAdapt = TrackAdapter(adapterListTracks!!)
@@ -164,7 +167,8 @@ class OptionsSearchActivity(
         }else
         {
             hsActive = false
-            layoutProgressBar.isVisible = true
+            //handler.postDelayed({ layoutProgressBar.isVisible = true }, 2000L)
+
         }
 
     }

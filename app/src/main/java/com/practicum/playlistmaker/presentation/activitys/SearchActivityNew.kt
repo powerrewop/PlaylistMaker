@@ -99,6 +99,14 @@ class SearchActivityNew : AppCompatActivity() {
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+        //Этот метод будет вызван при старте потока с поисковым запросом
+        runSearch.onProgressBar = {
+            runOnUiThread {
+                layoutProgressBar.isVisible = true
+            }
+        }
+        //
+
         val getSearchUseCase = creatorSearchModel.getSearchUseCase
 
         /////////////////////////
