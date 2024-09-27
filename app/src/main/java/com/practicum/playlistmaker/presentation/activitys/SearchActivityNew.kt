@@ -1,6 +1,8 @@
 package com.practicum.playlistmaker.presentation.activitys
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
@@ -13,15 +15,14 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.creator.SearchUseCaseCreator
-import com.practicum.playlistmaker.data.App
-import com.practicum.playlistmaker.data.storage.UserTextWorkImpl
-import com.practicum.playlistmaker.domain.model.Track
-import com.practicum.playlistmaker.domain.usecase.UserTextWorkUseCase
+import com.practicum.playlistmaker.creator.Creator
 import com.practicum.playlistmaker.presentation.OptionsSearchActivity
 import com.practicum.playlistmaker.presentation.TrackAdapter
 
 private const val USER_INPUT_TEXT_DEF = ""
+private const val USER_DELAY_INPUT = 2000L
+private const val USER_INPUT_TEXT = "USER_INPUT_TEXT"
+
 class SearchActivityNew : AppCompatActivity() {
 
     private var inputEditText: EditText? = null
@@ -40,12 +41,13 @@ class SearchActivityNew : AppCompatActivity() {
 
     private var trAdapt: TrackAdapter? = null
 
-    private lateinit var userTextWorkImpl: UserTextWorkImpl
-    private lateinit var userTextWorkUseCase: UserTextWorkUseCase
+    private var runSearchList: MutableList<Runnable> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        val handler = Handler(Looper.getMainLooper())
 
         inputEditText = findViewById(R.id.inputEditText)
         recycler = findViewById(R.id.musicList)
@@ -59,18 +61,9 @@ class SearchActivityNew : AppCompatActivity() {
         layoutProgressBar = findViewById(R.id.progressBar_layout)
         layoutRV = findViewById(R.id.rv_layout)
 
-        //////////////////////////////////////////
-        val searchUseCaseCreator = SearchUseCaseCreator(applicationContext as App)
-        val creatorUserTextWorkModel = searchUseCaseCreator.getUserTextWork()
-        userTextWorkImpl = creatorUserTextWorkModel.userTextWorkImpl
-        userTextWorkUseCase = creatorUserTextWorkModel.userTextWorkUseCase
-        //////////////////////////////////////////
+        val historySearchInteractor = Creator.getHistorySearchInteractor()
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-
-        /////////////////////////
-        val getHistorySearchUseCase = searchUseCaseCreator.getHistorySearchUseCase()
-        /////////////////////////
 
         val optionsSearchActivity = OptionsSearchActivity(
             trAdapt,
@@ -84,34 +77,10 @@ class SearchActivityNew : AppCompatActivity() {
             inputEditText,
             clearButton,
             userText,
-            this,
             layoutProgressBar
         )
-        /////////////////////////
 
-        val creatorSearchModel = searchUseCaseCreator.getSearch("https://itunes.apple.com")
-        val runSearch = creatorSearchModel.runSearch
-        //Это код который будет выполнен когда поток вернет результат!!!!
-        runSearch.onBack = { lt: List<Track>?, code: Int ->
-            runOnUiThread {
-                optionsSearchActivity.postSearch(code, lt)
-            }
-        }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        //Этот метод будет вызван при старте потока с поисковым запросом
-        runSearch.onProgressBar = {
-            runOnUiThread {
-                layoutProgressBar.isVisible = true
-            }
-        }
-        //
-
-        val getSearchUseCase = creatorSearchModel.getSearchUseCase
-
-        /////////////////////////
-        val clearHistoryUseCase = searchUseCaseCreator.getClearHistory()
-        ////////////////////////
+        val loadTracksUseCase = Creator.getLoadTracksUseCase()
 
         val ivSearchBack = findViewById<ImageView>(R.id.iv_searchBack)
         ivSearchBack.setOnClickListener {
@@ -119,24 +88,33 @@ class SearchActivityNew : AppCompatActivity() {
         }
 
         buttonUpdate.setOnClickListener {
-            getSearchUseCase.search(inputEditText?.text.toString())
+
+            loadTracksUseCase.load(inputEditText?.text.toString(), {
+                    tracks ->
+                layoutProgressBar.isVisible = false
+                optionsSearchActivity.postSearch(200, tracks)
+
+            }, {
+                layoutProgressBar.isVisible = false
+                optionsSearchActivity.postSearch(400, emptyList())
+            })
+
             optionsSearchActivity.visibleLayout(false)
             layoutProgressBar.isVisible = true
         }
 
         buttonHistoryClear!!.setOnClickListener {
-            clearHistoryUseCase.clearHistory()
+            historySearchInteractor.clear()
             optionsSearchActivity.hideHistoryElements()
         }
 
-
         clearButton.setOnClickListener {
             optionsSearchActivity.clear()
-            optionsSearchActivity.showHistory(true, getHistorySearchUseCase.getHistorySearch())
+            optionsSearchActivity.showHistory(true, historySearchInteractor.load())
         }
 
         inputEditText?.setOnFocusChangeListener { view, hasFocus ->
-            optionsSearchActivity.setFocus(hasFocus, getHistorySearchUseCase.getHistorySearch())
+            optionsSearchActivity.setFocus(hasFocus, historySearchInteractor.load())
         }
 
             val simpleTextWatcher = object : TextWatcher {
@@ -144,11 +122,26 @@ class SearchActivityNew : AppCompatActivity() {
 
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                optionsSearchActivity.textChange(s, getHistorySearchUseCase.getHistorySearch())
+                optionsSearchActivity.textChange(s, historySearchInteractor.load())
 
                 optionsSearchActivity.setHsActive()
-                getSearchUseCase.search(s.toString())
 
+                    val runSearch = Runnable {
+                        layoutProgressBar.isVisible = true
+                        loadTracksUseCase.load(s.toString(), {
+                            tracks ->
+                        layoutProgressBar.isVisible = false
+                        optionsSearchActivity.postSearch(200, tracks)
+                    }, {
+                        layoutProgressBar.isVisible = false
+                        optionsSearchActivity.postSearch(400, emptyList())
+                    })}
+
+                runSearchList.forEach { handler.removeCallbacks(it) }
+                runSearchList.clear()
+                runSearchList.add(runSearch)
+
+                handler.postDelayed(runSearch, USER_DELAY_INPUT)
             }
             override fun afterTextChanged(s: Editable?) {
 
@@ -161,13 +154,11 @@ class SearchActivityNew : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        userTextWorkImpl.bundle = outState
-        userTextWorkUseCase.save(userText)
+        outState.putString(USER_INPUT_TEXT, userText)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        userTextWorkImpl.bundle = savedInstanceState
-        userText = userTextWorkUseCase.load()
+        userText = savedInstanceState.getString(USER_INPUT_TEXT, USER_INPUT_TEXT_DEF)
     }
 }

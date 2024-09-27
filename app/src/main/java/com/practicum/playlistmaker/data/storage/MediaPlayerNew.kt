@@ -3,20 +3,23 @@ package com.practicum.playlistmaker.data.storage
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import com.practicum.playlistmaker.domain.storage.interfaces.PlayerControl
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class PlayerControlImpl: PlayerControl {
-
-    lateinit var onPlayImage: () -> Unit
-    lateinit var onPauseImage: () -> Unit
-    lateinit var onSetTimer: (timeText: String) -> Unit
+class MediaPlayerNew {
 
     private val mediaPlayer = MediaPlayer()
     private var playerState = STATE_DEFAULT
     private var mainThreadHandler = Handler(Looper.getMainLooper())
-    override fun preparePlayer(url: String?) {
+
+    lateinit var setPlImage: () -> Unit
+    lateinit var setPaImage: () -> Unit
+    lateinit var setTime: (timePlay: String) -> Unit
+    fun preparePlayer(url: String?, setPlayImage: () -> Unit, setPauseImage: () -> Unit, setTimePlay: (timePlay: String) -> Unit) {
+        setPlImage = setPlayImage
+        setPaImage = setPauseImage
+        setTime = setTimePlay
+
         mediaPlayer.setDataSource(url)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
@@ -27,20 +30,20 @@ class PlayerControlImpl: PlayerControl {
         }
     }
 
-    override fun startPlayer() {
+    fun startPlayer() {
         mediaPlayer.start()
         playerState = STATE_PLAYING
         mainThreadHandler.post(createUpdateTimerTask())
-        onPauseImage.invoke()
+        setPaImage.invoke()
     }
 
-    override fun pausePlayer() {
+    fun pausePlayer() {
         mediaPlayer.pause()
         playerState = STATE_PAUSED
-        onPlayImage.invoke()
+        setPlImage.invoke()
     }
 
-    override fun playbackControl() {
+    fun playbackControl() {
         when (playerState) {
             STATE_PLAYING -> {
                 pausePlayer()
@@ -52,7 +55,7 @@ class PlayerControlImpl: PlayerControl {
         }
     }
 
-    override fun closePlayer() {
+    fun closePlayer() {
         mediaPlayer.release()
     }
 
@@ -65,11 +68,11 @@ class PlayerControlImpl: PlayerControl {
                 mediaPlayer.setOnCompletionListener {
                     pausePlayer()
                     mainThreadHandler.removeCallbacks(this)
-                    onSetTimer.invoke("00:00")
+                    setTime.invoke("00:00")
                 }
 
                 if (playerState == STATE_PLAYING) {
-                    onSetTimer.invoke(SimpleDateFormat("mm:ss", Locale.getDefault()).format(timeTrack))
+                    setTime.invoke(SimpleDateFormat("mm:ss", Locale.getDefault()).format(timeTrack))
                     mainThreadHandler.postDelayed(this, TIMER_DELAY)
                 }
             }

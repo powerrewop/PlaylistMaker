@@ -5,67 +5,60 @@ import com.practicum.playlistmaker.data.App
 import com.practicum.playlistmaker.data.HISTORY_SEARCH
 import com.practicum.playlistmaker.domain.model.Track
 
-fun getHistorySearch(myApp: App): List<Track> {
+class SearchHistory() {
+    fun getHistorySearch(): List<Track> {
+        val arrayTrack = getDataSharedPrefs()
+        return arrayTrack.toList()
+    }
 
-    val arrayTrack = getDataSharedPrefs(myApp)
-    //return arrayTrack.asList().toMutableList()
-    return arrayTrack.toList()
+    fun saveHistorySearch(newElement: Track) {
 
-}
+        val oldArrayTrack = getDataSharedPrefs()
+        val oldListTrack: MutableList<Track> = oldArrayTrack.toMutableList()
 
-fun saveHistorySearch(myApp: App, newElement: Track) {
-
-    val oldArrayTrack = getDataSharedPrefs(myApp)
-    val oldListTrack: MutableList<Track> = oldArrayTrack.toMutableList()
-
-    var iterator = oldListTrack.iterator()
-    while (iterator.hasNext()) {
-        val track = iterator.next()
-        if (newElement.trackId == track.trackId) {
-            iterator.remove()
+        var iterator = oldListTrack.iterator()
+        while (iterator.hasNext()) {
+            val track = iterator.next()
+            if (newElement.trackId == track.trackId) {
+                iterator.remove()
+            }
         }
-    }
 
-    oldListTrack.add(0, newElement)
+        oldListTrack.add(0, newElement)
 
-    var i = 1
-    var iterator2 = oldListTrack.iterator()
-    while (iterator2.hasNext()) {
-        iterator2.next()
-        if (i > 10) {
-            iterator2.remove()
+        var i = 1
+        var iterator2 = oldListTrack.iterator()
+        while (iterator2.hasNext()) {
+            iterator2.next()
+            if (i > 10) {
+                iterator2.remove()
+            }
+            i++
         }
-        i++
+
+        val newArrayTrack = oldListTrack.toTypedArray()
+
+        val json = Gson().toJson(newArrayTrack)
+        App.sharedPrefs.edit()
+            ?.putString(HISTORY_SEARCH, json)
+            ?.apply()
     }
+    private fun getDataSharedPrefs(): Array<Track> {
 
-    val newArrayTrack = oldListTrack.toTypedArray()
+        val json = App.sharedPrefs.getString(HISTORY_SEARCH, null) ?: return emptyArray<Track>()
+        var arrayTrack = Gson().fromJson(json, Array<Track>::class.java)
 
-    val json = Gson().toJson(newArrayTrack)
-    myApp.sharedPrefs?.edit()
-        ?.putString(HISTORY_SEARCH, json)
-        ?.apply()
+        arrayTrack.forEach {
+            it.isHistory = true
+        }
 
-}
-
-fun getDataSharedPrefs(myApp: App): Array<Track> {
-
-    val json = myApp.sharedPrefs?.getString(HISTORY_SEARCH, null) ?: return emptyArray<Track>()
-    var arrayTrack = Gson().fromJson(json, Array<Track>::class.java)
-
-    arrayTrack.forEach {
-        it.isHistory = true
+        return arrayTrack
     }
-
-    return arrayTrack
-
-}
-
-fun clearHistory(myApp: App) {
-
-    val emptyArray = emptyArray<Track>()
-    val json = Gson().toJson(emptyArray)
-    myApp.sharedPrefs?.edit()
-        ?.putString(HISTORY_SEARCH, json)
-        ?.apply()
-
+    fun clearHistory() {
+        val emptyArray = emptyArray<Track>()
+        val json = Gson().toJson(emptyArray)
+        App.sharedPrefs.edit()
+            ?.putString(HISTORY_SEARCH, json)
+            ?.apply()
+    }
 }

@@ -1,11 +1,7 @@
 package com.practicum.playlistmaker.presentation
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.os.Handler
-import android.os.Looper
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -14,10 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.data.App
 import com.practicum.playlistmaker.domain.model.Track
-import com.practicum.playlistmaker.presentation.activitys.PlayerActivity
 
 class OptionsSearchActivity(
     private var trAdapt: TrackAdapter?,
@@ -31,25 +26,13 @@ class OptionsSearchActivity(
     private val inputEditText: EditText?,
     private val clearButton: ImageView,
     private var userText: String,
-    private val act: Activity,
     private val layoutProgressBar: LinearLayout
 ) {
 
     private var hsActive = false
-   // private val handler = Handler(Looper.getMainLooper())
     fun adapterInit(adapterListTracks: List<Track>?) {
         if (trAdapt == null) {
             trAdapt = TrackAdapter(adapterListTracks!!)
-
-            //////////Запуск формы плейера!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //calback из TrackAdapter
-            trAdapt!!.onOpenElement = {track : Track, context: Context ->
-                val json = Gson().toJson(track)
-                val displayIntent = Intent(context, PlayerActivity::class.java)
-                displayIntent.putExtra("TrackData", json)
-                act.startActivity(displayIntent)}
-            ////////////////////////////////////////////////////////////////////
-
             recycler?.adapter = trAdapt
         } else {
             trAdapt!!.updateTrack(adapterListTracks!!)
@@ -81,7 +64,6 @@ class OptionsSearchActivity(
     fun showHistory(isActive: Boolean, historyTrack: List<Track>?) {
 
         if (isActive) {
-            // historyTrack = getHistorySearch((applicationContext as App))
             if ((historyTrack!!.isNotEmpty()) && (historyTrack!!.size > 0)){
                 historyText!!.isVisible = true
                 buttonHistoryClear!!.isVisible = true
@@ -103,7 +85,7 @@ class OptionsSearchActivity(
     }
     fun clear(){
         inputEditText?.setText("")
-        val inputMethodManager = act.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        val inputMethodManager = App.instance.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(inputEditText?.windowToken, 0)
         problemLayout?.isVisible = false
         recycler?.isVisible = true
@@ -169,9 +151,6 @@ class OptionsSearchActivity(
         }else
         {
             hsActive = false
-            //handler.postDelayed({ layoutProgressBar.isVisible = true }, 2000L)
-
         }
-
     }
 }
