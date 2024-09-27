@@ -1,34 +1,31 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.presentation.activitys
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.creator.Creator
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val intentInteractor = Creator.getIntentInteractor()
 
         val btSearch = findViewById<Button>(R.id.bt_search)
         btSearch.setOnClickListener {
-            val displayIntent = Intent(this, SearchActivity::class.java)
-            startActivity(displayIntent)
+            intentInteractor.openSearch()
         }
-
 
         val btMedia = findViewById<Button>(R.id.bt_media)
         btMedia.setOnClickListener {
-            val displayIntent = Intent(this, MediaActivity::class.java)
-            startActivity(displayIntent)
+            intentInteractor.openMedia()
         }
-
 
         val btSettings = findViewById<Button>(R.id.bt_settings)
         btSettings.setOnClickListener {
-            val displayIntent = Intent(this, SettingsActivity::class.java)
-            startActivity(displayIntent)
+            intentInteractor.openSettings()
         }
     }
 }

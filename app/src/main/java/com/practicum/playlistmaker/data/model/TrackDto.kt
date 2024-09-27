@@ -1,8 +1,8 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Track(
+class TrackDto (
     var trackName: String,
     var artistName: String,
     @SerializedName("trackTimeMillis") var trackTime: Int,
@@ -10,7 +10,7 @@ data class Track(
     var trackId: Long,
     var isHistory: Boolean = false,
     var collectionName: String?,
-    var releaseDate: String,
+    var releaseDate: String?,
     var primaryGenreName: String,
     var country: String,
     var previewUrl: String?
