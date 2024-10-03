@@ -5,8 +5,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.creator.Creator
+import com.practicum.playlistmaker.databinding.SampleMusiclistBinding
 import com.practicum.playlistmaker.domain.model.Track
 
 class TrackAdapter(
@@ -17,11 +17,12 @@ class TrackAdapter(
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.sample_musiclist, parent, false)
-        return TrackViewHolder(view)
+
+        val layoutInspector = LayoutInflater.from(parent.context)
+        return TrackViewHolder(SampleMusiclistBinding.inflate(layoutInspector, parent, false))
     }
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
+
         holder.bind(trackList[position])
         holder.itemView.setOnClickListener {
 

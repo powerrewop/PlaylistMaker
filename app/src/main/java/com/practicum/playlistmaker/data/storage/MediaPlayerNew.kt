@@ -38,9 +38,12 @@ class MediaPlayerNew {
     }
 
     fun pausePlayer() {
-        mediaPlayer.pause()
-        playerState = STATE_PAUSED
-        setPlImage.invoke()
+
+        if (playerState == STATE_PLAYING) {
+            mediaPlayer.pause()
+            playerState = STATE_PAUSED
+            setPlImage.invoke()
+        }
     }
 
     fun playbackControl() {
