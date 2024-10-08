@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.R
@@ -20,12 +19,12 @@ import com.practicum.playlistmaker.databinding.ActivitySearchBinding
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.presentation.TrackAdapter
 import com.practicum.playlistmaker.presentation.ViewModels.SearchViewModel
-import com.practicum.playlistmaker.presentation.ViewModelsFactory.SearchViewModelFactory
 import com.practicum.playlistmaker.presentation.models.SearchParamModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivityNew : AppCompatActivity() {
 
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by viewModel()
     private lateinit var binding: ActivitySearchBinding
 
     private var trAdapt: TrackAdapter? = null
@@ -47,7 +46,6 @@ class SearchActivityNew : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        viewModel = ViewModelProvider(this, SearchViewModelFactory())[SearchViewModel::class.java]
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

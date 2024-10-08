@@ -10,6 +10,7 @@ import com.practicum.playlistmaker.presentation.UI.MediaActivity
 import com.practicum.playlistmaker.presentation.UI.PlayerActivity
 import com.practicum.playlistmaker.presentation.UI.SearchActivityNew
 import com.practicum.playlistmaker.presentation.UI.SettingsActivity
+import org.koin.java.KoinJavaComponent.getKoin
 
 class IntentWork() {
 
@@ -57,9 +58,10 @@ class IntentWork() {
     }
 
      fun openPlayer(track: Track) {
-         val json = Gson().toJson(track)
+         val gson: Gson  = getKoin().get()
+         val gsonString = gson.toJson(track)
          val displayIntent = Intent(App.instance, PlayerActivity::class.java)
-         displayIntent.putExtra("TrackData", json)
+         displayIntent.putExtra("TrackData", gsonString)
          displayIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
          App.instance.startActivity(displayIntent)
     }
