@@ -3,13 +3,11 @@ package com.practicum.playlistmaker.data.storage
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import org.koin.java.KoinJavaComponent.getKoin
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class MediaPlayerNew {
+class MediaPlayerNew(private val mediaPlayer: MediaPlayer) {
 
-    private val mediaPlayer: MediaPlayer = getKoin().get()
     private var playerState = STATE_DEFAULT
     private var mainThreadHandler = Handler(Looper.getMainLooper())
 

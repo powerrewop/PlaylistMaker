@@ -3,6 +3,7 @@ package com.practicum.playlistmaker.data.di
 import android.app.Application
 import android.media.MediaPlayer
 import com.google.gson.Gson
+import com.practicum.playlistmaker.data.App
 import com.practicum.playlistmaker.data.PLM_PREFERENCES_1
 import com.practicum.playlistmaker.data.impl.AppThemeRepositoryImpl
 import com.practicum.playlistmaker.data.impl.HistorySearchRepositoryImpl
@@ -33,6 +34,9 @@ val storageModule = module {
     single {
         androidContext().getSharedPreferences(PLM_PREFERENCES_1, Application.MODE_PRIVATE)
     }
+    single{
+        androidContext().applicationContext as App
+    }
 
     single<ItunesApiService> {
         Retrofit.Builder()
@@ -53,23 +57,23 @@ val storageModule = module {
     }
 
     factory<AppTheme> {
-        AppTheme()
+        AppTheme(get())
     }
 
     factory<IntentWork> {
-        IntentWork()
+        IntentWork(get(), get())
     }
 
     factory<MediaPlayerNew> {
-        MediaPlayerNew()
+        MediaPlayerNew(get())
     }
 
     factory<ParamData> {
-        ParamData()
+        ParamData(get())
     }
 
     factory<SearchHistory> {
-        SearchHistory()
+        SearchHistory(get(), get())
     }
 
     factory<AppThemeRepository> {

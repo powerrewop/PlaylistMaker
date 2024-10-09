@@ -1,5 +1,7 @@
 package com.practicum.playlistmaker.presentation.di
 
+import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.presentation.TrackAdapter
 import com.practicum.playlistmaker.presentation.ViewModels.MainViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.MediaViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.PlayerViewModel
@@ -27,5 +29,9 @@ val uiModule = module {
 
     factory<SettingsViewModel> {
         SettingsViewModel(get(), get())
+    }
+
+    factory<TrackAdapter>{ (tracks: List<Track>) ->
+        TrackAdapter(tracks,get(),get())
     }
 }

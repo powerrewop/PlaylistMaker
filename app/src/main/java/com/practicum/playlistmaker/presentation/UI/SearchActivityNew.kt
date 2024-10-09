@@ -20,17 +20,23 @@ import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.presentation.TrackAdapter
 import com.practicum.playlistmaker.presentation.ViewModels.SearchViewModel
 import com.practicum.playlistmaker.presentation.models.SearchParamModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class SearchActivityNew : AppCompatActivity() {
 
     private val viewModel: SearchViewModel by viewModel()
     private lateinit var binding: ActivitySearchBinding
 
-    private var trAdapt: TrackAdapter? = null
+    private lateinit var recycler: RecyclerView
+
+    private val trAdapt: TrackAdapter by inject {
+        parametersOf(emptyList<Track>())
+    }
 
     private lateinit var inputEditText: EditText
-    private lateinit var recycler: RecyclerView
+
     private lateinit var problemLayout: LinearLayout
     private lateinit var problemImage: ImageView
     private lateinit var problemText: TextView
@@ -61,6 +67,8 @@ class SearchActivityNew : AppCompatActivity() {
         layoutRV = binding.rvLayout
         clearButton = binding.clearIcon
         ivSearchBack = binding.ivSearchBack
+
+        recycler.adapter = trAdapt
 
         viewModel.getSearchParamModel().observe(this) {
             setVisibility(it)
@@ -250,12 +258,7 @@ class SearchActivityNew : AppCompatActivity() {
         }
     }
     fun adapterInit(adapterListTracks: List<Track>?) {
-        if (trAdapt == null) {
-            trAdapt = TrackAdapter(adapterListTracks!!)
-            recycler.adapter = trAdapt
-        } else {
             trAdapt!!.updateTrack(adapterListTracks!!)
             recycler.adapter?.notifyDataSetChanged()
-        }
     }
 }

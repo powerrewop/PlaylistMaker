@@ -9,10 +9,11 @@ import com.practicum.playlistmaker.databinding.SampleMusiclistBinding
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.usecase.HistorySearchInteractor
 import com.practicum.playlistmaker.domain.usecase.IntentInteractor
-import org.koin.java.KoinJavaComponent.getKoin
 
 class TrackAdapter(
-    private var trackList: List<Track>
+    private var trackList: List<Track>,
+    private val intentInteractor: IntentInteractor,
+    private val historySearchInteractor: HistorySearchInteractor
 ) : RecyclerView.Adapter<TrackViewHolder>() {
 
     private var isClickAllowed = true
@@ -27,9 +28,6 @@ class TrackAdapter(
 
         holder.bind(trackList[position])
         holder.itemView.setOnClickListener {
-
-            val intentInteractor: IntentInteractor = getKoin().get()
-            val historySearchInteractor: HistorySearchInteractor = getKoin().get()
 
             historySearchInteractor.save(trackList[position])
 

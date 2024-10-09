@@ -1,12 +1,11 @@
 package com.practicum.playlistmaker.data.storage
 
+import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.practicum.playlistmaker.data.App
 import com.practicum.playlistmaker.data.HISTORY_SEARCH
 import com.practicum.playlistmaker.domain.model.Track
-import org.koin.java.KoinJavaComponent.getKoin
 
-class SearchHistory() {
+class SearchHistory(private val gson: Gson, private val sharedPref: SharedPreferences) {
     fun getHistorySearch(): List<Track> {
         val arrayTrack = getDataSharedPrefs()
         return arrayTrack.toList()
@@ -39,16 +38,14 @@ class SearchHistory() {
 
         val newArrayTrack = oldListTrack.toTypedArray()
 
-        val gson: Gson = getKoin().get()
         val gsonString = gson.toJson(newArrayTrack)
-        App.sharedPrefs.edit()
+        sharedPref.edit()
             ?.putString(HISTORY_SEARCH, gsonString)
             ?.apply()
     }
     private fun getDataSharedPrefs(): Array<Track> {
 
-        val gson: Gson = getKoin().get()
-        val gsonString = App.sharedPrefs.getString(HISTORY_SEARCH, null) ?: return emptyArray<Track>()
+        val gsonString = sharedPref.getString(HISTORY_SEARCH, null) ?: return emptyArray<Track>()
         var arrayTrack = gson.fromJson(gsonString, Array<Track>::class.java)
 
         arrayTrack.forEach {
@@ -58,10 +55,9 @@ class SearchHistory() {
         return arrayTrack
     }
     fun clearHistory() {
-        val gson: Gson = getKoin().get()
         val emptyArray = emptyArray<Track>()
         val gsonString = gson.toJson(emptyArray)
-        App.sharedPrefs.edit()
+        sharedPref.edit()
             ?.putString(HISTORY_SEARCH, gsonString)
             ?.apply()
     }

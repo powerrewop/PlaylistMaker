@@ -1,10 +1,10 @@
 package com.practicum.playlistmaker.data.storage
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import com.practicum.playlistmaker.data.App
 
 const val THEME_SELECT = "select_day_night_theme"
-class AppTheme {
+class AppTheme(private val sharedPref: SharedPreferences) {
      fun changeTheme(isDarkTheme: Boolean) {
          AppCompatDelegate.setDefaultNightMode(
              if (isDarkTheme) {
@@ -15,11 +15,11 @@ class AppTheme {
          )
     }
      fun getTheme(): Boolean {
-         return App.sharedPrefs.getBoolean(THEME_SELECT, false)
+         return sharedPref.getBoolean(THEME_SELECT, false)
     }
 
      fun setTheme(isDarkTheme: Boolean) {
-         App.sharedPrefs.edit()
+         sharedPref.edit()
              ?.putBoolean(THEME_SELECT, isDarkTheme)
              ?.apply()
     }
