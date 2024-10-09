@@ -2,22 +2,20 @@ package com.practicum.playlistmaker.presentation.UI
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivitySettingsBinding
 import com.practicum.playlistmaker.presentation.ViewModels.SettingsViewModel
-import com.practicum.playlistmaker.presentation.ViewModelsFactory.SettingsViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: SettingsViewModel
+    private val viewModel: SettingsViewModel by viewModel()
     private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-       viewModel = ViewModelProvider(this, SettingsViewModelFactory())[SettingsViewModel::class.java]
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

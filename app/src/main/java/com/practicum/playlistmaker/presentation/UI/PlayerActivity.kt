@@ -3,17 +3,17 @@ package com.practicum.playlistmaker.presentation.UI
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityPlayerBinding
 import com.practicum.playlistmaker.presentation.ViewModels.PlayerViewModel
-import com.practicum.playlistmaker.presentation.ViewModelsFactory.PlayerViewModelFactory
+import org.koin.core.parameter.parametersOf
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayerActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: PlayerViewModel
+    private lateinit var  viewModel: PlayerViewModel
     private lateinit var binding: ActivityPlayerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,12 @@ class PlayerActivity : AppCompatActivity() {
         val arguments = getIntent().getExtras()
         val json = arguments?.getString("TrackData")
 
-        viewModel = ViewModelProvider(this, PlayerViewModelFactory(json))[PlayerViewModel::class.java]
+        val tempVM: PlayerViewModel by viewModel {
+            parametersOf(json)
+        }
+
+        viewModel = tempVM
+
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

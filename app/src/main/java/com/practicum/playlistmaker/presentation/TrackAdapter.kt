@@ -5,12 +5,15 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.creator.Creator
 import com.practicum.playlistmaker.databinding.SampleMusiclistBinding
 import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.domain.usecase.HistorySearchInteractor
+import com.practicum.playlistmaker.domain.usecase.IntentInteractor
 
 class TrackAdapter(
-    private var trackList: List<Track>
+    private var trackList: List<Track>,
+    private val intentInteractor: IntentInteractor,
+    private val historySearchInteractor: HistorySearchInteractor
 ) : RecyclerView.Adapter<TrackViewHolder>() {
 
     private var isClickAllowed = true
@@ -25,9 +28,6 @@ class TrackAdapter(
 
         holder.bind(trackList[position])
         holder.itemView.setOnClickListener {
-
-            val intentInteractor = Creator.getIntentInteractor()
-            val historySearchInteractor = Creator.getHistorySearchInteractor()
 
             historySearchInteractor.save(trackList[position])
 
