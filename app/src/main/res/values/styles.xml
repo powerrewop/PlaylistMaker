@@ -64,4 +64,20 @@
         <item name="android:textColor">@color/tx_color</item>
     </style>
 
+    <style name="normalText" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="fontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="tabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@color/tx_color</item>
+        <item name="tabSelectedTextColor">@color/tx_color</item>
+        <item name="tabBackground">@color/white</item>
+        <item name="tabIndicatorColor">@color/tx_color</item>
+        <item name="tabIndicatorFullWidth">false</item>
+    </style>
+
 </resources>
