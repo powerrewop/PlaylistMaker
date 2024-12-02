@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.data.App
 import com.practicum.playlistmaker.domain.model.Track
-import com.practicum.playlistmaker.presentation.UI.MediaActivity
+import com.practicum.playlistmaker.presentation.UI.Media.MediaActivity
 import com.practicum.playlistmaker.presentation.UI.PlayerActivity
 import com.practicum.playlistmaker.presentation.UI.SearchActivityNew
 import com.practicum.playlistmaker.presentation.UI.SettingsActivity

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,10 +17,16 @@
         android:theme="@style/Base.Theme.PlayListMaker"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.UI.Media.ParrentMediaFragment"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.UI.Media.EmptyMediaFragment"
+            android:exported="false" />
+        <activity
             android:name=".presentation.UI.PlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.UI.MediaActivity"
+            android:name=".presentation.UI.Media.MediaActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.UI.SearchActivityNew"
