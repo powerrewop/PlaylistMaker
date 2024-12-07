@@ -6,12 +6,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        style="@style/LinearLayoutStyle"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            style="@style/ImageViewStyle2"
+            android:layout_gravity="center"
+             />
+
+        <TextView
+            style="@style/mySetTextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:fontFamily="@font/ys_display_medium"
+            android:text="@string/button_media"
+            android:textFontWeight="500"
+            android:textSize="@dimen/sp_22" />
+
+    </LinearLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         app:tabTextAppearance="@style/normalText"
         style="@style/tabLayout"
+        android:layout_marginTop="@dimen/dp_16"
         />
 
     <androidx.viewpager2.widget.ViewPager2

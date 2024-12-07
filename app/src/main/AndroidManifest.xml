@@ -17,6 +17,15 @@
         android:theme="@style/Base.Theme.PlayListMaker"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.UI.SearchFragment"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.UI.SettingsFragment"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.UI.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.UI.Media.ParrentMediaFragment"
             android:exported="false" />
         <activity
@@ -35,7 +44,7 @@
             android:name=".presentation.UI.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.UI.MainActivity"
+            android:name=".presentation.UI.ParentActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
