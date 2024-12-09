@@ -23,9 +23,6 @@
             android:name=".presentation.UI.SettingsFragment"
             android:exported="false" />
         <activity
-            android:name=".presentation.UI.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.UI.Media.ParrentMediaFragment"
             android:exported="false" />
         <activity
@@ -35,17 +32,9 @@
             android:name=".presentation.UI.PlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.UI.Media.MediaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.UI.SearchActivityNew"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.UI.SettingsActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.UI.ParentActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

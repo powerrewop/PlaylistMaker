@@ -9,33 +9,18 @@ import com.practicum.playlistmaker.presentation.TrackAdapter
 import com.practicum.playlistmaker.presentation.UI.Media.EmptyMediaFragment
 import com.practicum.playlistmaker.presentation.UI.Media.PagerAdapter
 import com.practicum.playlistmaker.presentation.UI.Media.ParrentMediaFragment
-import com.practicum.playlistmaker.presentation.ViewModels.MainViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.Media.EmptyMediaFragmentViewModel
-import com.practicum.playlistmaker.presentation.ViewModels.Media.MediaViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.Media.ParrentMediaFragmentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.ParentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.PlayerViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.SearchFragmentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.SettingsFragmentViewModel
-import com.practicum.playlistmaker.presentation.ViewModels.SettingsViewModel
 import org.koin.dsl.module
 
 val uiModule = module {
 
-    factory<MainViewModel> {
-        MainViewModel(get())
-    }
-
-    factory<MediaViewModel> {
-        MediaViewModel()
-    }
-
     factory<PlayerViewModel> {(jsonTrack: String) ->
         PlayerViewModel(get(), get(), jsonTrack)
-    }
-
-    factory<SettingsViewModel> {
-        SettingsViewModel(get(), get())
     }
 
     factory<EmptyMediaFragmentViewModel> {

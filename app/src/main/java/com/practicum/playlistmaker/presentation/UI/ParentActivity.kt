@@ -16,7 +16,6 @@ class ParentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityParentBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_parent)
 
         binding = ActivityParentBinding.inflate(layoutInflater)
         setContentView(binding.root)

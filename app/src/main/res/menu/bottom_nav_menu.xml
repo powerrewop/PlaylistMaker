@@ -3,14 +3,17 @@
 
     <item
         android:id="@+id/searchFragment"
-        android:title="TODO" />
+        android:title="@string/button_search"
+        android:icon="@drawable/bar_search"/>
 
     <item
         android:id="@+id/parrentMediaFragment"
-        android:title="TODO" />
+        android:title="@string/button_media"
+        android:icon="@drawable/bar_media"/>
 
     <item
         android:id="@+id/settingsFragment"
-        android:title="TODO" />
+        android:title="@string/button_settings"
+        android:icon="@drawable/bar_settings" />
 
 </menu>

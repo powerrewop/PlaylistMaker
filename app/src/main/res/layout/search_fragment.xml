@@ -11,24 +11,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         tools:ignore="UseCompoundDrawables">
-
-        <ImageView
-            android:id="@+id/iv_searchBack"
-            style="@style/ImageViewStyle2"
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/dp_16"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-             />
 
         <TextView
             style="@style/TextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/ys_display_medium"
             android:text="@string/button_search"
             android:textFontWeight="500"
@@ -39,7 +30,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_16">
 
 
         <LinearLayout

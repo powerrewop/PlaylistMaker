@@ -76,7 +76,6 @@ class SearchFragment : Fragment() {
         layoutProgressBar = binding!!.progressBarLayout
         layoutRV = binding!!.rvLayout
         clearButton = binding!!.clearIcon
-        ivSearchBack = binding!!.ivSearchBack
 
         recycler.adapter = trAdapt
 

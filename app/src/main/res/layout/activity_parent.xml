@@ -22,6 +22,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="?attr/colorOnSurfaceVariant"
+        app:itemTextColor="?attr/colorOnSurfaceVariant"
+        app:backgroundTint = "?attr/colorOnSecondary"
+        android:theme="@style/my_bar_style"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

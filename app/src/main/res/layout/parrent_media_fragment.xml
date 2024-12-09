@@ -8,22 +8,17 @@
 
     <LinearLayout
         style="@style/LinearLayoutStyle"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="@dimen/dp_10"
         tools:ignore="UseCompoundDrawables">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            style="@style/ImageViewStyle2"
-            android:layout_gravity="center"
-             />
+
 
         <TextView
             style="@style/mySetTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/dp_20"
             android:fontFamily="@font/ys_display_medium"
             android:text="@string/button_media"
             android:textFontWeight="500"

@@ -53,7 +53,11 @@ class ParrentMediaFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-        tabMediator.detach()
+        try {
+            tabMediator.detach()
+        } catch (e: Throwable) {
+
+        }
     }
 
     companion object {
