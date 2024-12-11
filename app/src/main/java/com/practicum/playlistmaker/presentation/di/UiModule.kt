@@ -1,7 +1,6 @@
 package com.practicum.playlistmaker.presentation.di
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -10,35 +9,18 @@ import com.practicum.playlistmaker.presentation.TrackAdapter
 import com.practicum.playlistmaker.presentation.UI.Media.EmptyMediaFragment
 import com.practicum.playlistmaker.presentation.UI.Media.PagerAdapter
 import com.practicum.playlistmaker.presentation.UI.Media.ParrentMediaFragment
-import com.practicum.playlistmaker.presentation.ViewModels.MainViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.Media.EmptyMediaFragmentViewModel
-import com.practicum.playlistmaker.presentation.ViewModels.Media.MediaViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.Media.ParrentMediaFragmentViewModel
+import com.practicum.playlistmaker.presentation.ViewModels.ParentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.PlayerViewModel
-import com.practicum.playlistmaker.presentation.ViewModels.SearchViewModel
-import com.practicum.playlistmaker.presentation.ViewModels.SettingsViewModel
+import com.practicum.playlistmaker.presentation.ViewModels.SearchFragmentViewModel
+import com.practicum.playlistmaker.presentation.ViewModels.SettingsFragmentViewModel
 import org.koin.dsl.module
 
 val uiModule = module {
 
-    factory<MainViewModel> {
-        MainViewModel(get())
-    }
-
-    factory<MediaViewModel> {
-        MediaViewModel()
-    }
-
     factory<PlayerViewModel> {(jsonTrack: String) ->
         PlayerViewModel(get(), get(), jsonTrack)
-    }
-
-    factory<SearchViewModel> {
-        SearchViewModel(get(), get())
-    }
-
-    factory<SettingsViewModel> {
-        SettingsViewModel(get(), get())
     }
 
     factory<EmptyMediaFragmentViewModel> {
@@ -67,6 +49,17 @@ val uiModule = module {
 
     factory<ParrentMediaFragment> {
         ParrentMediaFragment.newInstance()
+    }
+
+    factory<ParentViewModel> {
+        ParentViewModel()
+    }
+    factory<SettingsFragmentViewModel> {
+        SettingsFragmentViewModel(get(), get())
+    }
+
+    factory<SearchFragmentViewModel> {
+        SearchFragmentViewModel(get(), get())
     }
 
 }

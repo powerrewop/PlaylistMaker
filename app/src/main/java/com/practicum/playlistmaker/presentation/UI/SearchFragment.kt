@@ -4,30 +4,33 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.databinding.ActivitySearchBinding
+import com.practicum.playlistmaker.databinding.SearchFragmentBinding
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.presentation.TrackAdapter
-import com.practicum.playlistmaker.presentation.ViewModels.SearchViewModel
+import com.practicum.playlistmaker.presentation.ViewModels.SearchFragmentViewModel
 import com.practicum.playlistmaker.presentation.models.SearchParamModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class SearchActivityNew : AppCompatActivity() {
+class SearchFragment : Fragment() {
 
-    private val viewModel: SearchViewModel by viewModel()
-    private lateinit var binding: ActivitySearchBinding
+    private var binding: SearchFragmentBinding? = null
+    private val viewModel: SearchFragmentViewModel by viewModel()
 
     private lateinit var recycler: RecyclerView
 
@@ -48,34 +51,36 @@ class SearchActivityNew : AppCompatActivity() {
     private lateinit var clearButton: ImageView
     private lateinit var ivSearchBack: ImageView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding = SearchFragmentBinding.inflate(inflater, container, false)
+        return binding!!.root
+    }
 
-        binding = ActivitySearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        inputEditText = binding.inputEditText
-        recycler = binding.musicList
-        problemLayout = binding.problemLayout
-        problemImage = binding.problemImage
-        problemText = binding.problemText
-        buttonUpdate = binding.buttonUpdate
-        historyText = binding.textHistory
-        buttonHistoryClear = binding.buttonHistoryClear
-        layoutProgressBar = binding.progressBarLayout
-        layoutRV = binding.rvLayout
-        clearButton = binding.clearIcon
-        ivSearchBack = binding.ivSearchBack
+
+        inputEditText = binding!!.inputEditText
+        recycler = binding!!.musicList
+        problemLayout = binding!!.problemLayout
+        problemImage = binding!!.problemImage
+        problemText = binding!!.problemText
+        buttonUpdate = binding!!.buttonUpdate
+        historyText = binding!!.textHistory
+        buttonHistoryClear = binding!!.buttonHistoryClear
+        layoutProgressBar = binding!!.progressBarLayout
+        layoutRV = binding!!.rvLayout
+        clearButton = binding!!.clearIcon
 
         recycler.adapter = trAdapt
 
-        viewModel.getSearchParamModel().observe(this) {
+        viewModel.getSearchParamModel().observe(viewLifecycleOwner) {
             setVisibility(it)
-        }
-
-        ivSearchBack.setOnClickListener {
-            finish()
         }
 
         buttonUpdate.setOnClickListener {
@@ -90,8 +95,8 @@ class SearchActivityNew : AppCompatActivity() {
 
             inputEditText.setText("")
             val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(inputEditText?.windowToken, 0)
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
 
             viewModel.clear()
         }
@@ -112,8 +117,10 @@ class SearchActivityNew : AppCompatActivity() {
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
-        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+
     }
+
     fun setVisibility(searchParamModel: SearchParamModel) {
         when (searchParamModel) {
             is SearchParamModel.EmptyContent -> emptyContent(
@@ -258,7 +265,8 @@ class SearchActivityNew : AppCompatActivity() {
         }
     }
     fun adapterInit(adapterListTracks: List<Track>?) {
-            trAdapt!!.updateTrack(adapterListTracks!!)
-            recycler.adapter?.notifyDataSetChanged()
+        trAdapt!!.updateTrack(adapterListTracks!!)
+        recycler.adapter?.notifyDataSetChanged()
     }
+
 }

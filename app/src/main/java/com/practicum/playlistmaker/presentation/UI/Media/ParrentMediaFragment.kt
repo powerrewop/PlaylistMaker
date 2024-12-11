@@ -24,7 +24,7 @@ class ParrentMediaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        super.onCreateView(inflater, container, savedInstanceState)
         binding = ParrentMediaFragmentBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -50,10 +50,11 @@ class ParrentMediaFragment : Fragment() {
         tabMediator.attach()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
 
         tabMediator.detach()
+
     }
 
     companion object {

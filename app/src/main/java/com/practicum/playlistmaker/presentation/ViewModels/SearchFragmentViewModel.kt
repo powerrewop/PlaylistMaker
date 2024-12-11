@@ -13,11 +13,11 @@ import com.practicum.playlistmaker.presentation.models.SearchParamModel
 
 const val SEARCH_REQUEST_TOKEN = "SEARCH_REQUEST_TOKEN"
 const val USER_DELAY = 2000L
-class SearchViewModel(
+class SearchFragmentViewModel(
     private val historySearchInteractor: HistorySearchInteractor,
     private val loadTracksUseCase: LoadTracksUseCase
-) : ViewModel() {
-
+) : ViewModel()
+{
     private var saveTracks: List<Track>? = emptyList()
     private var userText: String = ""
     val handler = Handler(Looper.getMainLooper())
@@ -103,4 +103,3 @@ class SearchViewModel(
         }
     }
 }
-

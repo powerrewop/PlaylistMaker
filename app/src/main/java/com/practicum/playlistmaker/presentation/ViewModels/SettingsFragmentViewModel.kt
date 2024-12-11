@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.practicum.playlistmaker.domain.usecase.AppThemeInteractor
 import com.practicum.playlistmaker.domain.usecase.IntentInteractor
 
-class SettingsViewModel(
+class SettingsFragmentViewModel(
     private val intentInteractor: IntentInteractor,
     private val appThemeInteractor: AppThemeInteractor
-) : ViewModel() {
+): ViewModel() {
 
     private var isDarkTheme = MutableLiveData(appThemeInteractor.getTheme())
-    fun getIsDarkTheme(): LiveData<Boolean>  {
+    fun getIsDarkTheme(): LiveData<Boolean> {
         return isDarkTheme
     }
     fun shareClick(){

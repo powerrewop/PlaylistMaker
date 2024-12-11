@@ -23,6 +23,7 @@ class EmptyMediaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        super.onCreateView(inflater, container, savedInstanceState)
         binding = EmptyMediaFragmentBinding.inflate(inflater, container, false)
         return binding!!.root
     }
