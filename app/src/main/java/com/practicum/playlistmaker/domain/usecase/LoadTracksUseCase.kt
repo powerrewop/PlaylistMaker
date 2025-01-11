@@ -1,13 +1,11 @@
 package com.practicum.playlistmaker.domain.usecase
 
-import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.domain.model.SearchResponse
 import com.practicum.playlistmaker.domain.storage.interfaces.SearchRepository
+import kotlinx.coroutines.flow.Flow
 
 class LoadTracksUseCase(private val searchRepository: SearchRepository) {
-    fun load(textSearch: String, onSuccess: (List<Track>) -> Unit, onFailure: (Throwable) -> Unit){
-        searchRepository.getTracks(textSearch) { result ->
-            result.onSuccess(onSuccess)
-            result.onFailure(onFailure)
-        }
+    suspend fun load(textSearch: String): Flow<SearchResponse>{
+        return searchRepository.getTracks(textSearch)
     }
 }
