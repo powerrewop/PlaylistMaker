@@ -1,7 +1,8 @@
 package com.practicum.playlistmaker.domain.storage.interfaces
 
-import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.domain.model.SearchResponse
+import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
-    fun getTracks(textSearch: String, callback: (Result<List<Track>>) -> Unit)
+    suspend fun getTracks(textSearch: String): Flow<SearchResponse>
 }

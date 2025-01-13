@@ -1,17 +1,15 @@
 package com.practicum.playlistmaker.presentation
 
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.SampleMusiclistBinding
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.usecase.HistorySearchInteractor
 import com.practicum.playlistmaker.domain.usecase.IntentInteractor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class TrackAdapter(
     private var trackList: List<Track>,
@@ -20,7 +18,6 @@ class TrackAdapter(
 ) : RecyclerView.Adapter<TrackViewHolder>() {
 
     private var isClickAllowed = true
-    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
 
@@ -37,7 +34,11 @@ class TrackAdapter(
             if (isClickAllowed) {
                 isClickAllowed = false
                 intentInteractor.openPlayer(trackList[position])
-                handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+                GlobalScope.launch {
+                    delay(CLICK_DEBOUNCE_DELAY)
+                    isClickAllowed = true
+                }
+
             }
             if (trackList[position].isHistory) {
                 trackList = historySearchInteractor.load()

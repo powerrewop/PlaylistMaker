@@ -1,11 +1,21 @@
 package com.practicum.playlistmaker.data.storage
 
 import com.practicum.playlistmaker.data.model.ItunesDataModel
-import retrofit2.Callback
 
 class NetworkClient(private val iTunesService: ItunesApiService) {
+    suspend fun getSearchResult(textSearch: String): ItunesDataModel{
 
-    fun getSearchResult(textSearch: String, callback: (Callback<ItunesDataModel>)){
-        iTunesService.search(textSearch).enqueue(callback)
+        var res: ItunesDataModel
+
+        try {
+            res = iTunesService.search(textSearch)
+            res.apply {
+                isError = false
+                textError = ""
+            }
+        }catch(e: Throwable) {
+            res = ItunesDataModel(null, true, e.toString())
+        }
+        return res
     }
 }

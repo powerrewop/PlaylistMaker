@@ -1,15 +1,19 @@
 package com.practicum.playlistmaker.data.storage
 
 import android.media.MediaPlayer
-import android.os.Handler
-import android.os.Looper
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class MediaPlayerNew(private val mediaPlayer: MediaPlayer) {
 
     private var playerState = STATE_DEFAULT
-    private var mainThreadHandler = Handler(Looper.getMainLooper())
+
+    private lateinit var updJob: Job
 
     lateinit var setPlImage: () -> Unit
     lateinit var setPaImage: () -> Unit
@@ -32,7 +36,11 @@ class MediaPlayerNew(private val mediaPlayer: MediaPlayer) {
     fun startPlayer() {
         mediaPlayer.start()
         playerState = STATE_PLAYING
-        mainThreadHandler.post(createUpdateTimerTask())
+
+        updJob =   GlobalScope.launch {
+            createUpdateTimerTask()
+        }
+
         setPaImage.invoke()
     }
 
@@ -61,25 +69,25 @@ class MediaPlayerNew(private val mediaPlayer: MediaPlayer) {
         mediaPlayer.release()
     }
 
-    private fun createUpdateTimerTask(): Runnable {
-        return object : Runnable {
-            override fun run() {
+       private suspend fun createUpdateTimerTask() {
 
-                val timeTrack = mediaPlayer.currentPosition
+            val timeTrack = mediaPlayer.currentPosition
 
-                mediaPlayer.setOnCompletionListener {
-                    pausePlayer()
-                    mainThreadHandler.removeCallbacks(this)
-                    setTime.invoke("00:00")
-                }
+            mediaPlayer.setOnCompletionListener {
+                pausePlayer()
+                updJob.cancel()
+                setTime.invoke("00:00")
+            }
 
-                if (playerState == STATE_PLAYING) {
-                    setTime.invoke(SimpleDateFormat("mm:ss", Locale.getDefault()).format(timeTrack))
-                    mainThreadHandler.postDelayed(this, TIMER_DELAY)
+            if (playerState == STATE_PLAYING) {
+                setTime.invoke(SimpleDateFormat("mm:ss", Locale.getDefault()).format(timeTrack))
+
+                updJob = GlobalScope.launch {
+                    delay(TIMER_DELAY)
+                    createUpdateTimerTask()
                 }
             }
         }
-    }
 
     companion object {
         private const val STATE_DEFAULT = 0
