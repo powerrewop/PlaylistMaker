@@ -71,6 +71,12 @@ class PlayerActivity : AppCompatActivity() {
             }else{
                 iv_buttonPlay.setImageResource(R.drawable.button_play_track)
             }
+
+            if (it.isFav){
+                iv_buttonLike.setImageResource(R.drawable.button_like_track_on)
+            }else{
+                iv_buttonLike.setImageResource(R.drawable.button_like_track)
+            }
         }
 
         iv_back.setOnClickListener {
@@ -79,6 +85,10 @@ class PlayerActivity : AppCompatActivity() {
 
         iv_buttonPlay.setOnClickListener {
             viewModel.buttonPlay()
+        }
+
+        iv_buttonLike.setOnClickListener {
+            viewModel.buttonFavPressed()
         }
     }
     override fun onPause() {

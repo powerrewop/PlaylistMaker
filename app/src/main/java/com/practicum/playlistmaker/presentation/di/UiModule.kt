@@ -7,9 +7,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.presentation.TrackAdapter
 import com.practicum.playlistmaker.presentation.UI.Media.EmptyMediaFragment
+import com.practicum.playlistmaker.presentation.UI.Media.FavoritesMediaFragment
 import com.practicum.playlistmaker.presentation.UI.Media.PagerAdapter
 import com.practicum.playlistmaker.presentation.UI.Media.ParrentMediaFragment
 import com.practicum.playlistmaker.presentation.ViewModels.Media.EmptyMediaFragmentViewModel
+import com.practicum.playlistmaker.presentation.ViewModels.Media.FavoritesMediaFragmentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.Media.ParrentMediaFragmentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.ParentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.PlayerViewModel
@@ -20,7 +22,7 @@ import org.koin.dsl.module
 val uiModule = module {
 
     factory<PlayerViewModel> {(jsonTrack: String) ->
-        PlayerViewModel(get(), get(), jsonTrack)
+        PlayerViewModel(get(), get(), jsonTrack, get())
     }
 
     factory<EmptyMediaFragmentViewModel> {
@@ -59,7 +61,15 @@ val uiModule = module {
     }
 
     factory<SearchFragmentViewModel> {
-        SearchFragmentViewModel(get(), get())
+        SearchFragmentViewModel(get(), get(), get())
+    }
+
+    factory<FavoritesMediaFragment> {
+        FavoritesMediaFragment.newInstance()
+    }
+
+    factory<FavoritesMediaFragmentViewModel> {
+        FavoritesMediaFragmentViewModel(get())
     }
 
 }

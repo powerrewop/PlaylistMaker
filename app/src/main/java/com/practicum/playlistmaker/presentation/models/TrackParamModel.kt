@@ -9,5 +9,6 @@ data class TrackParamModel(
     val country: String,
     var timerText: String,
     val trackAlbumVisible: Boolean,
-    var isPlay: Boolean
+    var isPlay: Boolean,
+    var isFav: Boolean
 )

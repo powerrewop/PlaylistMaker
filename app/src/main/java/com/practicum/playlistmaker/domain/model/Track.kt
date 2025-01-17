@@ -11,5 +11,6 @@ data class Track(
     var releaseDate: String?,
     var primaryGenreName: String,
     var country: String,
-    var previewUrl: String?
+    var previewUrl: String?,
+    var isFavorite: Boolean
 )

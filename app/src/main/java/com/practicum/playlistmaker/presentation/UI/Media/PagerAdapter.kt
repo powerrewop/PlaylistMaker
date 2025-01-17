@@ -8,6 +8,12 @@ import org.koin.java.KoinJavaComponent.getKoin
 class PagerAdapter(hostFragment: Fragment) : FragmentStateAdapter(hostFragment) {
     override fun getItemCount(): Int = 2
     override fun createFragment(position: Int): Fragment {
+
+        if(position == 0){
+            return getKoin().get(FavoritesMediaFragment::class)
+        }
+
         return getKoin().get(EmptyMediaFragment::class,null ,{ parametersOf(position) })
+
     }
 }

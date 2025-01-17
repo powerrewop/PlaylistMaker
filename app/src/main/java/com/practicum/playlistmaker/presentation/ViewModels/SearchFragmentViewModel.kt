@@ -5,17 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.practicum.playlistmaker.domain.model.Track
+import com.practicum.playlistmaker.domain.usecase.FavTrackInteractor
 import com.practicum.playlistmaker.domain.usecase.HistorySearchInteractor
 import com.practicum.playlistmaker.domain.usecase.LoadTracksUseCase
 import com.practicum.playlistmaker.presentation.models.SearchParamModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 const val USER_DELAY = 2000L
 class SearchFragmentViewModel(
     private val historySearchInteractor: HistorySearchInteractor,
-    private val loadTracksUseCase: LoadTracksUseCase
+    private val loadTracksUseCase: LoadTracksUseCase,
+    private val favTrackInteractor: FavTrackInteractor
 ) : ViewModel()
 {
     private var saveTracks: List<Track>? = emptyList()
@@ -106,12 +110,44 @@ class SearchFragmentViewModel(
         }
     }
     private fun workHistory(){
-        saveTracks = historySearchInteractor.load()
-        val historyContent = SearchParamModel.HistoryContent(saveTracks, userText)
-        if (saveTracks!!.isNotEmpty()) {
-            searchParamModel.postValue(historyContent)
-        } else {
-            searchParamModel.postValue(SearchParamModel.EmptyContent(saveTracks, userText))
+
+        var favTrackId:List<Long> = emptyList()
+
+        viewModelScope.launch {
+
+            withContext(Dispatchers.IO) {
+                saveTracks = historySearchInteractor.load()
+
+                favTrackInteractor
+                    .getAllIdFavTracks()
+                    .collect {
+                        favTrackId = it
+                    }
+            }
+
+            saveTracks?.forEach {
+                it.isFavorite = isFavTrack(it.trackId, favTrackId)
+            }
+
+            val historyContent = SearchParamModel.HistoryContent(saveTracks, userText)
+            if (saveTracks!!.isNotEmpty()) {
+                searchParamModel.postValue(historyContent)
+            } else {
+                searchParamModel.postValue(SearchParamModel.EmptyContent(saveTracks, userText))
+            }
         }
+
+    }
+
+    private fun isFavTrack(idTrack: Long, favIdList: List<Long>): Boolean{
+
+        favIdList.forEach {
+            if (it == idTrack){
+                return true
+            }
+        }
+
+        return false
+
     }
 }
