@@ -4,15 +4,23 @@ import android.icu.text.SimpleDateFormat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.practicum.playlistmaker.domain.usecase.FavTrackInteractor
+import com.practicum.playlistmaker.domain.usecase.IntentInteractor
 import com.practicum.playlistmaker.domain.usecase.MediaplayerUseCase
 import com.practicum.playlistmaker.domain.usecase.ParamDataUseCase
 import com.practicum.playlistmaker.presentation.models.TrackParamModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class PlayerViewModel(
     private val paramDataUseCase: ParamDataUseCase,
     private val mediaplayerUseCase: MediaplayerUseCase,
-    private val jsonTrack: String?
+    private val jsonTrack: String?,
+    private val favTrackInteractor: FavTrackInteractor,
+    private val intentInteractor: IntentInteractor
 ): ViewModel() {
 
     private lateinit var trackParamModel: TrackParamModel
@@ -61,8 +69,8 @@ class PlayerViewModel(
             return true
         }
     }
-    private fun getTrackParamModel(): TrackParamModel{
-            trackParamModel = TrackParamModel(
+    private fun getTrackParamModel(): TrackParamModel {
+        trackParamModel = TrackParamModel(
             track.artworkUrl100,
             track.trackName,
             track.collectionName,
@@ -72,10 +80,50 @@ class PlayerViewModel(
             track.country,
             "00:00",
             getAlbumVis(track.collectionName),
-            false
+            false,
+            track.isFavorite
         )
         return trackParamModel
     }
+
+    fun addToFav(){
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                favTrackInteractor.saveFavTrack(track)
+            }
+        }
+
+        intentInteractor.updateFav(track.trackId, true)
+
+    }
+
+    fun deleteFromFav(){
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                favTrackInteractor.deleteFromFav(track)
+            }
+        }
+
+        intentInteractor.updateFav(track.trackId, false)
+
+    }
+
+    fun buttonFavPressed(){
+        if (track.isFavorite){
+            deleteFromFav()
+            track.isFavorite = false
+            trackParamModel.isFav = false
+            dataTrack.postValue(trackParamModel)
+        }else{
+            addToFav()
+            track.isFavorite = true
+            trackParamModel.isFav = true
+            dataTrack.postValue(trackParamModel)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         mediaplayerUseCase.closePlayer()

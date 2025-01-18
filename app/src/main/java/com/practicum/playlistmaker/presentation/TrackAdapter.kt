@@ -18,6 +18,7 @@ class TrackAdapter(
 ) : RecyclerView.Adapter<TrackViewHolder>() {
 
     private var isClickAllowed = true
+    var isFavForm = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
 
@@ -33,6 +34,9 @@ class TrackAdapter(
 
             if (isClickAllowed) {
                 isClickAllowed = false
+
+                intentInteractor.callBack = ::updateFav
+
                 intentInteractor.openPlayer(trackList[position])
                 GlobalScope.launch {
                     delay(CLICK_DEBOUNCE_DELAY)
@@ -44,6 +48,36 @@ class TrackAdapter(
                 trackList = historySearchInteractor.load()
                 notifyDataSetChanged()
             }
+        }
+    }
+
+    fun updateFav(idTrack: Long, newFav: Boolean){
+
+        if (isFavForm){
+
+            var tempList: MutableList<Track>? = mutableListOf()
+
+            trackList.forEach {
+
+                if(it.trackId != idTrack){
+                    tempList?.add(it)
+                }
+
+            }
+
+            if (tempList != null) {
+                trackList = tempList.toList()
+                notifyDataSetChanged()
+            }
+
+        }else{
+
+            trackList.forEach {
+                if(it.trackId == idTrack){
+                    it.isFavorite = newFav
+                }
+            }
+
         }
     }
     override fun getItemCount() = trackList.size

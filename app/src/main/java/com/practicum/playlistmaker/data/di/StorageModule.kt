@@ -2,10 +2,14 @@ package com.practicum.playlistmaker.data.di
 
 import android.app.Application
 import android.media.MediaPlayer
+import androidx.room.Room
 import com.google.gson.Gson
 import com.practicum.playlistmaker.data.App
 import com.practicum.playlistmaker.data.PLM_PREFERENCES_1
+import com.practicum.playlistmaker.data.db.converters.TrackConverter
+import com.practicum.playlistmaker.data.db.AppDatabase
 import com.practicum.playlistmaker.data.impl.AppThemeRepositoryImpl
+import com.practicum.playlistmaker.data.db.FavTrackRepositoryImpl
 import com.practicum.playlistmaker.data.impl.HistorySearchRepositoryImpl
 import com.practicum.playlistmaker.data.impl.IntentRepositoryImpl
 import com.practicum.playlistmaker.data.impl.MediaplayerRepositoryImpl
@@ -18,6 +22,7 @@ import com.practicum.playlistmaker.data.storage.MediaPlayerNew
 import com.practicum.playlistmaker.data.storage.NetworkClient
 import com.practicum.playlistmaker.data.storage.ParamData
 import com.practicum.playlistmaker.data.storage.SearchHistory
+import com.practicum.playlistmaker.domain.db.FavTrackRepository
 import com.practicum.playlistmaker.domain.storage.interfaces.AppThemeRepository
 import com.practicum.playlistmaker.domain.storage.interfaces.HistorySearchRepository
 import com.practicum.playlistmaker.domain.storage.interfaces.IntentRepository
@@ -97,6 +102,20 @@ val storageModule = module {
     }
 
     factory<SearchRepository> {
-        SearchRepositoryImpl(get())
+        SearchRepositoryImpl(get(), get())
+    }
+
+    single {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "favtracksdb.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    factory<TrackConverter> {
+        TrackConverter()
+    }
+
+    single<FavTrackRepository> {
+        FavTrackRepositoryImpl(get(), get())
     }
 }
