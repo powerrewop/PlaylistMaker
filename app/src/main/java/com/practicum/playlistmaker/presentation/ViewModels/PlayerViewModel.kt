@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.practicum.playlistmaker.domain.usecase.FavTrackInteractor
+import com.practicum.playlistmaker.domain.usecase.IntentInteractor
 import com.practicum.playlistmaker.domain.usecase.MediaplayerUseCase
 import com.practicum.playlistmaker.domain.usecase.ParamDataUseCase
 import com.practicum.playlistmaker.presentation.models.TrackParamModel
@@ -18,7 +19,8 @@ class PlayerViewModel(
     private val paramDataUseCase: ParamDataUseCase,
     private val mediaplayerUseCase: MediaplayerUseCase,
     private val jsonTrack: String?,
-    private val favTrackInteractor: FavTrackInteractor
+    private val favTrackInteractor: FavTrackInteractor,
+    private val intentInteractor: IntentInteractor
 ): ViewModel() {
 
     private lateinit var trackParamModel: TrackParamModel
@@ -85,19 +87,27 @@ class PlayerViewModel(
     }
 
     fun addToFav(){
+
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 favTrackInteractor.saveFavTrack(track)
             }
         }
+
+        intentInteractor.updateFav(track.trackId, true)
+
     }
 
     fun deleteFromFav(){
+
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 favTrackInteractor.deleteFromFav(track)
             }
         }
+
+        intentInteractor.updateFav(track.trackId, false)
+
     }
 
     fun buttonFavPressed(){

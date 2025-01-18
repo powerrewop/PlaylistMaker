@@ -19,7 +19,7 @@ val usecasesModule = module {
         HistorySearchInteractor(get())
     }
 
-    factory<IntentInteractor> {
+    single<IntentInteractor> {
         IntentInteractor(get())
     }
 

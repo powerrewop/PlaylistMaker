@@ -43,6 +43,7 @@ class FavoritesMediaFragment : Fragment() {
 
         recycler = binding!!.musicList
 
+        trAdapt.isFavForm = true
         recycler.adapter = trAdapt
 
         recycler.layoutManager = LinearLayoutManager(requireContext())

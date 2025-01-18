@@ -22,7 +22,7 @@ import org.koin.dsl.module
 val uiModule = module {
 
     factory<PlayerViewModel> {(jsonTrack: String) ->
-        PlayerViewModel(get(), get(), jsonTrack, get())
+        PlayerViewModel(get(), get(), jsonTrack, get(), get())
     }
 
     factory<EmptyMediaFragmentViewModel> {
