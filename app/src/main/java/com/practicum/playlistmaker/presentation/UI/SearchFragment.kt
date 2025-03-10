@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.R
@@ -77,7 +78,9 @@ class SearchFragment : Fragment() {
         layoutRV = binding!!.rvLayout
         clearButton = binding!!.clearIcon
 
+        trAdapt.callBackOpenPlayer = ::openPlayer //!!!!!!!!!!!!
         recycler.adapter = trAdapt
+
 
         viewModel.getSearchParamModel().observe(viewLifecycleOwner) {
             setVisibility(it)
@@ -267,6 +270,10 @@ class SearchFragment : Fragment() {
     fun adapterInit(adapterListTracks: List<Track>?) {
         trAdapt!!.updateTrack(adapterListTracks!!)
         recycler.adapter?.notifyDataSetChanged()
+    }
+
+    fun openPlayer(op: Track){
+        findNavController().navigate(R.id.action_searchFragment_to_playerFragment, PlayerFragment.createArgs(op))
     }
 
 }

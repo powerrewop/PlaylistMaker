@@ -6,8 +6,5 @@ interface IntentRepository {
     fun openSend()
     fun openSendTo()
     fun openView()
-    fun openSearch()
-    fun openMedia()
-    fun openSettings()
-    fun openPlayer(track: Track)
+
 }

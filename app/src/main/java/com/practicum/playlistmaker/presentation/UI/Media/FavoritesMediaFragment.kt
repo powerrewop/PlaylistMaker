@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.FavoritesMediaFragmentBinding
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.presentation.TrackAdapter
+import com.practicum.playlistmaker.presentation.UI.PlayerFragment
 import com.practicum.playlistmaker.presentation.ViewModels.Media.FavoritesMediaFragmentViewModel
 import com.practicum.playlistmaker.presentation.models.FavLibModel
 import org.koin.android.ext.android.inject
@@ -44,6 +47,7 @@ class FavoritesMediaFragment : Fragment() {
         recycler = binding!!.musicList
 
         trAdapt.isFavForm = true
+        trAdapt.callBackOpenPlayer = ::openPlayer //!!!!!!!!!!!!
         recycler.adapter = trAdapt
 
         recycler.layoutManager = LinearLayoutManager(requireContext())
@@ -88,6 +92,10 @@ class FavoritesMediaFragment : Fragment() {
         binding?.emptyContentLn?.isVisible = false
         binding?.favContentFrame?.isVisible = false
         binding?.favLoadFrame?.isVisible = true
+    }
+
+    fun openPlayer(op: Track){
+        findNavController().navigate(R.id.action_parrentMediaFragment_to_playerFragment, PlayerFragment.createArgs(op))
     }
 
 

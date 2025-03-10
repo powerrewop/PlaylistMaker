@@ -19,6 +19,7 @@ class TrackAdapter(
 
     private var isClickAllowed = true
     var isFavForm = false
+    var callBackOpenPlayer: ((track: Track)->Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
 
@@ -37,7 +38,10 @@ class TrackAdapter(
 
                 intentInteractor.callBack = ::updateFav
 
-                intentInteractor.openPlayer(trackList[position])
+                if  (callBackOpenPlayer != null) {
+                    callBackOpenPlayer!!.invoke(trackList[position])
+                }
+
                 GlobalScope.launch {
                     delay(CLICK_DEBOUNCE_DELAY)
                     isClickAllowed = true

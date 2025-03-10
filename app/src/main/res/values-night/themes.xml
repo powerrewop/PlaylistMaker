@@ -7,5 +7,13 @@
         <item name="colorOnSecondary">@color/tx_color</item>
         <item name="colorAccent">@color/for_cursor</item>
         <item name="colorOnSurfaceVariant">@color/bottom_bar_color_dark</item>
+        <item name="colorOnPrimaryFixed">@color/white</item>
     </style>
+
+    <style name="CustomOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/text_input_layout_stroke_color</item>
+        <item name="android:textColorHint">@color/text_color_hint</item>
+        <item name="hintTextColor">@color/for_cursor</item>
+    </style>
+
 </resources>

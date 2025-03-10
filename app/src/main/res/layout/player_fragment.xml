@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="?attr/colorOnSecondary">
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".presentation.UI.PlayerActivity"
+            android:background="?attr/colorOnSecondary"
+            >
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/leftBorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/smallleftBorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/rightBorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/smallrightBorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <ImageView
+                android:id="@+id/iv_playerBack"
+                style="@style/ImageViewStyle2"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
+                android:src="@drawable/back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_playerBanner"
+                android:layout_width="312dp"
+                android:layout_height="312dp"
+                android:layout_marginTop="15dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/empty_image"
+                app:layout_constraintEnd_toStartOf="@id/rightBorder"
+                app:layout_constraintStart_toStartOf="@id/leftBorder"
+                app:layout_constraintTop_toBottomOf="@id/iv_playerBack" />
+
+            <TextView
+                android:id="@+id/tv_nameTrack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/ys_display_medium"
+                android:text=""
+                android:textColor="?attr/colorSecondary"
+                android:textFontWeight="400"
+                android:textSize="@dimen/sp_22"
+                app:layout_constraintStart_toStartOf="@id/leftBorder"
+                app:layout_constraintTop_toBottomOf="@id/iv_playerBanner"
+                app:layout_constraintEnd_toEndOf="@id/rightBorder"
+                app:layout_constraintHorizontal_bias="0"
+                />
+
+            <TextView
+                android:id="@+id/tv_nameAlbum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/ys_display_medium"
+                android:text=""
+                android:textColor="?attr/colorSecondary"
+                android:textFontWeight="400"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="@id/leftBorder"
+                app:layout_constraintTop_toBottomOf="@id/tv_nameTrack"
+                app:layout_constraintEnd_toEndOf="@id/rightBorder"
+                app:layout_constraintHorizontal_bias="0"/>
+
+
+            <ImageView
+                android:id="@+id/iv_buttonAdd"
+                android:layout_width="51dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="54dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/button_add_lib"
+                app:layout_constraintEnd_toStartOf="@id/iv_buttonPlay"
+                app:layout_constraintStart_toStartOf="@id/leftBorder"
+                app:layout_constraintTop_toBottomOf="@id/tv_nameAlbum"
+
+
+                />
+
+            <ImageView
+                android:id="@+id/iv_buttonPlay"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/button_play_track"
+                app:layout_constraintEnd_toStartOf="@id/iv_buttonLike"
+                app:layout_constraintStart_toEndOf="@id/iv_buttonAdd"
+                app:layout_constraintTop_toBottomOf="@id/tv_nameAlbum"
+                app:tint="?attr/colorSecondary" />
+
+            <ImageView
+                android:id="@+id/iv_buttonLike"
+                android:layout_width="51dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="54dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toStartOf="@id/rightBorder"
+                app:layout_constraintStart_toEndOf="@id/iv_buttonPlay"
+                app:layout_constraintTop_toBottomOf="@id/tv_nameAlbum" />
+
+            <TextView
+                android:id="@+id/tv_track_len_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/ys_display_medium"
+                android:text=""
+                android:textColor="?attr/colorSecondary"
+                android:textFontWeight="500"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/rightBorder"
+                app:layout_constraintStart_toStartOf="@id/leftBorder"
+                app:layout_constraintTop_toBottomOf="@id/iv_buttonPlay" />
+
+            <TextView
+                android:id="@+id/tv_track_len"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text="@string/text_track_lenght"
+                android:textColor="@color/for_icons"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/smallleftBorder"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_len_play" />
+
+            <TextView
+                android:id="@+id/tv_track_len_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text=""
+                android:textColor="?attr/colorSecondary"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@id/smallrightBorder"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/tv_track_len"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_len_play" />
+
+            <TextView
+                android:id="@+id/tv_track_album"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text="@string/text_track_album"
+                android:textColor="@color/for_icons"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/smallleftBorder"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_len"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/tv_track_album_data"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text=""
+                android:textColor="?attr/colorSecondary"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_len_data"
+                app:layout_constraintStart_toEndOf="@id/tv_track_album"
+                app:layout_constraintEnd_toEndOf="@id/smallrightBorder"
+                app:layout_constraintHorizontal_bias="1"
+                android:layout_marginStart="@dimen/dp_10"
+                android:visibility="visible"
+                android:textAlignment="textEnd"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_track_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text="@string/text_track_year"
+                android:textColor="@color/for_icons"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/smallleftBorder"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_album" />
+
+            <TextView
+                android:id="@+id/tv_track_year_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text=""
+                android:textColor="?attr/colorSecondary"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@id/smallrightBorder"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/tv_track_year"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_album_data" />
+
+            <TextView
+                android:id="@+id/tv_track_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text="@string/text_track_genre"
+                android:textColor="@color/for_icons"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/smallleftBorder"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_year" />
+
+            <TextView
+                android:id="@+id/tv_track_genre_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text=""
+                android:textColor="?attr/colorSecondary"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@id/smallrightBorder"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/tv_track_genre"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_year_data" />
+
+            <TextView
+                android:id="@+id/tv_track_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text="@string/text_track_country"
+                android:textColor="@color/for_icons"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/smallleftBorder"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_genre" />
+
+            <TextView
+                android:id="@+id/tv_track_country_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/ys_text_regular"
+                android:text=""
+                android:textColor="?attr/colorSecondary"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@id/smallrightBorder"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/tv_track_country"
+                app:layout_constraintTop_toBottomOf="@id/tv_track_genre_data"
+                android:paddingBottom="10dp"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <View android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="visible"/>
+
+    <LinearLayout
+        android:id="@+id/bs"
+        android:background="@drawable/shape_bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="505dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        >
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="4dp"
+            android:background="@drawable/corner_rad44"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_8">
+
+
+        </View>
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ys_text_regular"
+            android:text="@string/text_add_playlist"
+            android:textColor="?attr/colorSecondary"
+            android:textFontWeight="500"
+            android:textSize="19sp"
+
+            />
+
+        <Button
+            android:id="@+id/button_new_playlist"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="?attr/colorSecondary"
+            android:fontFamily="@font/ys_display_medium"
+            android:text="@string/text_new_paylist"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorOnSecondary"
+            android:textFontWeight="500"
+            android:textSize="14sp"
+            app:cornerRadius="54dp"
+            android:layout_marginTop="28dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginStart="0dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

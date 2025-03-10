@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:name=".data.App"
@@ -26,10 +31,7 @@
             android:name=".presentation.UI.Media.ParrentMediaFragment"
             android:exported="false" />
         <activity
-            android:name=".presentation.UI.Media.EmptyMediaFragment"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.UI.PlayerActivity"
+            android:name=".presentation.UI.Media.PlayListsMediaFragment"
             android:exported="false" />
         <activity
             android:name=".presentation.UI.ParentActivity"
