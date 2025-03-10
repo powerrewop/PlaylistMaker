@@ -16,18 +16,6 @@ class IntentInteractor(private val intentRepository: IntentRepository) {
     fun openView(){
         intentRepository.openView()
     }
-    fun openSearch(){
-        intentRepository.openSearch()
-    }
-    fun openMedia(){
-        intentRepository.openMedia()
-    }
-    fun openSettings(){
-        intentRepository.openSettings()
-    }
-    fun openPlayer(track: Track){
-        intentRepository.openPlayer(track)
-    }
 
     fun updateFav(idTrack: Long, newFav: Boolean){
         callBack?.invoke(idTrack, newFav)

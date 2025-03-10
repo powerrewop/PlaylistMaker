@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker.data
 
 import android.app.Application
+import com.markodevcic.peko.PermissionRequester
 import com.practicum.playlistmaker.data.di.storageModule
 import com.practicum.playlistmaker.domain.di.usecasesModule
 import com.practicum.playlistmaker.domain.usecase.AppThemeInteractor
@@ -23,5 +24,7 @@ class App : Application() {
 
         val appThemeInteractor: AppThemeInteractor by inject()
         appThemeInteractor.changeTheme(appThemeInteractor.getTheme())
+
+        PermissionRequester.initialize(applicationContext)
     }
 }

@@ -13,7 +13,8 @@ class PagerAdapter(hostFragment: Fragment) : FragmentStateAdapter(hostFragment) 
             return getKoin().get(FavoritesMediaFragment::class)
         }
 
-        return getKoin().get(EmptyMediaFragment::class,null ,{ parametersOf(position) })
+        //return getKoin().get(PlayListsMediaFragment::class,null ,{ parametersOf(position) })
+        return getKoin().get(PlayListsMediaFragment::class)
 
     }
 }

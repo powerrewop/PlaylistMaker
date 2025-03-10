@@ -9,13 +9,9 @@
         android:name="com.practicum.playlistmaker.presentation.UI.SearchFragment"
         android:label="SearchFragment" >
         <action
-            android:id="@+id/action_searchFragment_to_playerActivity"
-            app:destination="@id/playerActivity" />
+            android:id="@+id/action_searchFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
     </fragment>
-    <activity
-        android:id="@+id/playerActivity"
-        android:name="com.practicum.playlistmaker.presentation.UI.PlayerActivity"
-        android:label="PlayerActivity" />
     <fragment
         android:id="@+id/parrentMediaFragment"
         android:name="com.practicum.playlistmaker.presentation.UI.Media.ParrentMediaFragment"
@@ -23,6 +19,15 @@
         <action
             android:id="@+id/action_parrentMediaFragment_to_favoritesMediaFragment"
             app:destination="@id/favoritesMediaFragment" />
+        <action
+            android:id="@+id/action_parrentMediaFragment_to_emptyMediaFragment"
+            app:destination="@id/emptyMediaFragment" />
+        <action
+            android:id="@+id/action_parrentMediaFragment_to_createListFragment"
+            app:destination="@id/createListFragment" />
+        <action
+            android:id="@+id/action_parrentMediaFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -33,7 +38,30 @@
         android:name="com.practicum.playlistmaker.presentation.UI.Media.FavoritesMediaFragment"
         android:label="FavoritesMediaFragment" >
         <action
-            android:id="@+id/action_favoritesMediaFragment_to_playerActivity"
-            app:destination="@id/playerActivity" />
+            android:id="@+id/action_favoritesMediaFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createListFragment"
+        android:name="com.practicum.playlistmaker.presentation.UI.CreateListFragment"
+        android:label="CreateListFragment" />
+    <fragment
+        android:id="@+id/emptyMediaFragment"
+        android:name="com.practicum.playlistmaker.presentation.UI.Media.PlayListsMediaFragment"
+        android:label="EmptyMediaFragment" >
+        <action
+            android:id="@+id/action_emptyMediaFragment_to_createListFragment"
+            app:destination="@id/createListFragment" />
+        <action
+            android:id="@+id/action_emptyMediaFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerFragment"
+        android:name="com.practicum.playlistmaker.presentation.UI.PlayerFragment"
+        android:label="PlayerFragment" >
+        <action
+            android:id="@+id/action_playerFragment_to_createListFragment"
+            app:destination="@id/createListFragment" />
     </fragment>
 </navigation>

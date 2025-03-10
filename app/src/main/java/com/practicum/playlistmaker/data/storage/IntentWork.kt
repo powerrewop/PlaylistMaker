@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.data.App
 import com.practicum.playlistmaker.domain.model.Track
-import com.practicum.playlistmaker.presentation.UI.PlayerActivity
 
 class IntentWork(private val gson: Gson, private val myApp: App) {
 
@@ -35,25 +34,6 @@ class IntentWork(private val gson: Gson, private val myApp: App) {
          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
          myApp.startActivity(intent)
     }
-     fun openSearch() {
-//         val intSearch = Intent(myApp, SearchActivityNew::class.java)
-//         intSearch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//         myApp.startActivity(intSearch)
-    }
 
-     fun openMedia() {
 
-    }
-
-     fun openSettings() {
-
-    }
-
-     fun openPlayer(track: Track) {
-         val gsonString = gson.toJson(track)
-         val displayIntent = Intent(myApp, PlayerActivity::class.java)
-         displayIntent.putExtra("TrackData", gsonString)
-         displayIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-         myApp.startActivity(displayIntent)
-    }
 }

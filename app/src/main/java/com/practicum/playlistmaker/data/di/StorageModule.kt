@@ -10,6 +10,7 @@ import com.practicum.playlistmaker.data.db.converters.TrackConverter
 import com.practicum.playlistmaker.data.db.AppDatabase
 import com.practicum.playlistmaker.data.impl.AppThemeRepositoryImpl
 import com.practicum.playlistmaker.data.db.FavTrackRepositoryImpl
+import com.practicum.playlistmaker.data.db.TracksListsRepositoryImpl
 import com.practicum.playlistmaker.data.impl.HistorySearchRepositoryImpl
 import com.practicum.playlistmaker.data.impl.IntentRepositoryImpl
 import com.practicum.playlistmaker.data.impl.MediaplayerRepositoryImpl
@@ -23,6 +24,7 @@ import com.practicum.playlistmaker.data.storage.NetworkClient
 import com.practicum.playlistmaker.data.storage.ParamData
 import com.practicum.playlistmaker.data.storage.SearchHistory
 import com.practicum.playlistmaker.domain.db.FavTrackRepository
+import com.practicum.playlistmaker.domain.db.TracksListsRepository
 import com.practicum.playlistmaker.domain.storage.interfaces.AppThemeRepository
 import com.practicum.playlistmaker.domain.storage.interfaces.HistorySearchRepository
 import com.practicum.playlistmaker.domain.storage.interfaces.IntentRepository
@@ -117,5 +119,9 @@ val storageModule = module {
 
     single<FavTrackRepository> {
         FavTrackRepositoryImpl(get(), get())
+    }
+
+    single<TracksListsRepository> {
+        TracksListsRepositoryImpl(get(), get())
     }
 }
