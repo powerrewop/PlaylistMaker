@@ -34,9 +34,6 @@
             android:name=".presentation.UI.Media.PlayListsMediaFragment"
             android:exported="false" />
         <activity
-            android:name=".presentation.UI.PlayerActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.UI.ParentActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustNothing">
