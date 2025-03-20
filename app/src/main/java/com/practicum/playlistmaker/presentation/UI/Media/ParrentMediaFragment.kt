@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.practicum.playlistmaker.R
@@ -48,6 +50,14 @@ class ParrentMediaFragment : Fragment() {
         }
 
         tabMediator.attach()
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                findNavController().navigateUp()
+            }
+        })
+
     }
 
     override fun onDestroyView() {

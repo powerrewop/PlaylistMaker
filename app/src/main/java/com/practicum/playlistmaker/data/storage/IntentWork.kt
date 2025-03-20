@@ -9,9 +9,15 @@ import com.practicum.playlistmaker.domain.model.Track
 
 class IntentWork(private val gson: Gson, private val myApp: App) {
 
-     fun openSend() {
+     fun openSend(textShare: String?) {
          val actionShare = Intent(Intent.ACTION_SEND)
-         actionShare.putExtra(Intent.EXTRA_TEXT, myApp.getString(R.string.link_YP))
+
+         if(textShare == null) {
+             actionShare.putExtra(Intent.EXTRA_TEXT, myApp.getString(R.string.link_YP))
+         }else{
+             actionShare.putExtra(Intent.EXTRA_TEXT, textShare)
+         }
+
          actionShare.type = "text/x-uri"
          val shareLink = Intent.createChooser(actionShare, null)
          shareLink.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

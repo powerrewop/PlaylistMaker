@@ -5,5 +5,6 @@ class PlayList(
     var name: String,
     var image: String?,
     var desc: String?,
-    var count: String?
+    var count: String?,
+    var userAction: Boolean = false
 )

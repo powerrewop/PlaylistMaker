@@ -22,6 +22,7 @@ import com.practicum.playlistmaker.presentation.ViewModels.ParentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.PlayerFragmentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.SearchFragmentViewModel
 import com.practicum.playlistmaker.presentation.ViewModels.SettingsFragmentViewModel
+import com.practicum.playlistmaker.presentation.ViewModels.ViewPlayListFragmentViewModel
 import org.koin.dsl.module
 
 val uiModule = module {
@@ -82,7 +83,7 @@ val uiModule = module {
     }
 
     factory<CreateListFragmentViewModel> {
-        CreateListFragmentViewModel(get())
+        CreateListFragmentViewModel(get(), get())
     }
 
     factory<CreateListFragment> {
@@ -92,6 +93,10 @@ val uiModule = module {
 
     factory<PlayerFragmentViewModel> {(jsonTrack: String) ->
         PlayerFragmentViewModel(get(), get(), jsonTrack, get(), get(), get())
+    }
+
+    factory<ViewPlayListFragmentViewModel> {(jsonList: String) ->
+        ViewPlayListFragmentViewModel(get(), jsonList, get(), get())
     }
 
 }

@@ -31,7 +31,25 @@ object UiConverter {
             }
         }
 
-        return "Треков: $sum"
+        return "треков: $sum"
+    }
+
+    fun listListTracksToListTrack(listTracks: List<PlayListTrack>?): List<Track>{
+
+        return listTracks?.map { Track(
+            it.trackName,
+            it.artistName,
+            it.trackTime,
+            it.artworkUrl100,
+            it.trackId,
+            false,
+            it.collectionName,
+            it.releaseDate,
+            it.primaryGenreName,
+            it.country,
+            it.previewUrl,
+            true
+        ) } ?: emptyList()
     }
 
 }

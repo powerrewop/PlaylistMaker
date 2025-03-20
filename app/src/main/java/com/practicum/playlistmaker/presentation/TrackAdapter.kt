@@ -20,6 +20,7 @@ class TrackAdapter(
     private var isClickAllowed = true
     var isFavForm = false
     var callBackOpenPlayer: ((track: Track)->Unit)? = null
+    var callBackLongClick: ((track: Track)->Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
 
@@ -53,6 +54,15 @@ class TrackAdapter(
                 notifyDataSetChanged()
             }
         }
+
+        holder.itemView.setOnLongClickListener {
+
+            if (callBackLongClick != null){
+                callBackLongClick!!.invoke(trackList[position])
+            }
+            true
+        }
+
     }
 
     fun updateFav(idTrack: Long, newFav: Boolean){

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.PlaylistsMediaFragmentBinding
 import com.practicum.playlistmaker.domain.model.PlayList
 import com.practicum.playlistmaker.presentation.ListsAdapter
+import com.practicum.playlistmaker.presentation.UI.ViewPlayListFragment
 import com.practicum.playlistmaker.presentation.ViewModels.Media.PlayListsMediaFragmentViewModel
 import com.practicum.playlistmaker.presentation.models.PlayListMediaFragmentModel
 import org.koin.android.ext.android.inject
@@ -53,6 +55,8 @@ class PlayListsMediaFragment : Fragment() {
             }
         }
 
+        trAdapt.typeH = 0
+        trAdapt.callBackBigList = ::openListView
         recycler = binding!!.rv
         recycler.adapter = trAdapt
         recycler.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
@@ -60,6 +64,15 @@ class PlayListsMediaFragment : Fragment() {
         binding!!.buttonNewPlaylist.setOnClickListener {
             findNavController().navigate(R.id.action_parrentMediaFragment_to_createListFragment)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                //findNavController().navigateUp()
+                requireActivity().finish()
+
+            }
+        })
 
     }
 
@@ -99,6 +112,10 @@ class PlayListsMediaFragment : Fragment() {
 
         adapterInit(listModel.listPlaylists)
 
+    }
+
+    fun openListView(playList: PlayList){
+        findNavController().navigate(R.id.action_parrentMediaFragment_to_viewPlayListFragment, ViewPlayListFragment.createArgs(playList))
     }
 
     companion object {

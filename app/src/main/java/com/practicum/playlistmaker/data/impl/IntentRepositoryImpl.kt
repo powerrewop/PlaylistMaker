@@ -5,8 +5,8 @@ import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.storage.interfaces.IntentRepository
 
 class IntentRepositoryImpl(private val intentWork: IntentWork): IntentRepository {
-    override fun openSend() {
-        intentWork.openSend()
+    override fun openSend(textShare: String?) {
+        intentWork.openSend(textShare)
     }
 
     override fun openSendTo() {

@@ -16,29 +16,34 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import com.markodevcic.peko.PermissionRequester
 import com.markodevcic.peko.PermissionResult
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.PlayListCreateFragmentBinding
-import com.practicum.playlistmaker.presentation.UI.Media.FavoritesMediaFragment
+import com.practicum.playlistmaker.domain.model.PlayList
 import com.practicum.playlistmaker.presentation.ViewModels.CreateListFragmentViewModel
 import com.practicum.playlistmaker.presentation.models.CreateListModel
+import com.practicum.playlistmaker.presentation.models.EditListModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.java.KoinJavaComponent
 import java.io.File
 import java.io.FileOutputStream
 
 
-class CreateListFragment(): Fragment() {
+class CreateListFragment() : Fragment() {
 
     private var binding: PlayListCreateFragmentBinding? = null
     private val viewModel: CreateListFragmentViewModel by viewModel()
+
 
     lateinit private var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
 
@@ -48,7 +53,7 @@ class CreateListFragment(): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-         super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreateView(inflater, container, savedInstanceState)
 
         binding = PlayListCreateFragmentBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -56,21 +61,65 @@ class CreateListFragment(): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        try {
+            val gsonList = requireArguments().getString(OPEN_LIST_EDIT)
+            viewModel.enableEditMode(gsonList)
+            binding!!.tittleTextView.setText(R.string.edit_playlist_tittle)
+            binding!!.buttonCreate.setText(R.string.edit_playlist_button)
+        } catch (e: Throwable) {
+
+        }
+
+
         val requester = PermissionRequester.instance()
 
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCreateListModel().observe(viewLifecycleOwner) {
+        if (!viewModel.isEditMode()) {
 
-            when (it) {
-                is CreateListModel.statCreateList -> setVisibility(it)
+            viewModel.getCreateListModel().observe(viewLifecycleOwner) {
+
+                when (it) {
+                    is CreateListModel.statCreateList -> setVisibility(it)
+                }
             }
+        } else {
+
+            viewModel.getEditListModel().observe(viewLifecycleOwner) {
+                setVisibilityEditMode(it)
+            }
+
+            viewModel.getEditModeButtonSaveActive().observe(viewLifecycleOwner) {
+                setActivityButtonSave(it)
+            }
+
         }
+
+
 
         binding!!.buttonCreate.setOnClickListener {
 
-            viewModel.createPlayList(binding!!.etName.editText?.text.toString(), binding!!.etDesc.editText?.text.toString())
-            Toast.makeText(requireContext(), "Плейлист " + binding!!.etName.editText?.text.toString() + " создан.", Toast.LENGTH_SHORT).show()
+            if(!viewModel.isEditMode()) {
+
+                viewModel.createPlayList(
+                    binding!!.etName.editText?.text.toString(),
+                    binding!!.etDesc.editText?.text.toString()
+                )
+                Toast.makeText(
+                    requireContext(),
+                    "Плейлист " + binding!!.etName.editText?.text.toString() + " создан.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }else{
+
+                viewModel.editPlayList(
+                    binding!!.etName.editText?.text.toString(),
+                    binding!!.etDesc.editText?.text.toString()
+                )
+
+            }
+
             findNavController().navigateUp()
         }
 
@@ -79,7 +128,7 @@ class CreateListFragment(): Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.userChangeText(s.toString())
+                viewModel.userChangeText(s.toString(), binding!!.etDesc.editText?.text.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -102,11 +151,14 @@ class CreateListFragment(): Fragment() {
                             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
 
                         is PermissionResult.Denied ->
-                           TODO()
+                            TODO()
+
                         is PermissionResult.Denied.NeedsRationale ->
                             TODO()
+
                         is PermissionResult.Denied.DeniedPermanently ->
                             TODO()
+
                         is PermissionResult.Cancelled ->
                             TODO()
                     }
@@ -149,7 +201,11 @@ class CreateListFragment(): Fragment() {
                     )
                     val fileRead = File(filePathRead, nameImage)
 
-                    viewModel.loadAlbumImage(fileRead.toUri(), binding!!.etName.editText?.text.toString())
+                    viewModel.loadAlbumImage(
+                        fileRead.toUri(),
+                        binding!!.etName.editText?.text.toString(),
+                        binding!!.etDesc.editText?.text.toString()
+                    )
 
                     ///////
                 }
@@ -169,7 +225,8 @@ class CreateListFragment(): Fragment() {
         }
 
     }
-    fun setVisibility(createListModel: CreateListModel.statCreateList){
+
+    fun setVisibility(createListModel: CreateListModel.statCreateList) {
 
         Glide.with(this).load(createListModel.image).placeholder(R.drawable.add_photo)
             .centerCrop().transform(RoundedCorners(8)).into(binding!!.ivImageAlbum)
@@ -178,35 +235,64 @@ class CreateListFragment(): Fragment() {
 
     }
 
-    fun isUserData(): Boolean{
+    fun setVisibilityEditMode(editModel: EditListModel) {
 
-        if (viewModel.isImageLoad() || binding!!.etName.editText?.text.toString().isNotEmpty() || binding!!.etDesc.editText?.text.toString().isNotEmpty()){
+        Glide.with(this).load(editModel.image).placeholder(R.drawable.add_photo)
+            .centerCrop().transform(RoundedCorners(8)).into(binding!!.ivImageAlbum)
+
+        binding!!.etName.editText?.setText(editModel.name)
+        binding!!.etDesc.editText?.setText(editModel.desc)
+
+    }
+
+    fun setActivityButtonSave(act: Boolean){
+        binding!!.buttonCreate.isEnabled = act
+    }
+
+    fun isUserData(): Boolean {
+
+        if (viewModel.isImageLoad() || binding!!.etName.editText?.text.toString()
+                .isNotEmpty() || binding!!.etDesc.editText?.text.toString().isNotEmpty()
+        ) {
             return true
         }
         return false
     }
 
-    fun dialogShow(){
+    fun dialogShow() {
 
-        if (isUserData()) {
+        if(!viewModel.isEditMode()) {
 
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(getString(R.string.dialog_title))
-                .setMessage(getString(R.string.dialog_text))
-                .setNegativeButton(getString(R.string.dialog_cancel)) { dialog, which ->
-                }
-                .setPositiveButton(getString(R.string.dialog_close)) { dialog, which ->
-                    findNavController().navigateUp()
-                }
-                .show()
+            if (isUserData()) {
 
-        } else{
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.dialog_title))
+                    .setMessage(getString(R.string.dialog_text))
+                    .setNegativeButton(getString(R.string.dialog_cancel)) { dialog, which ->
+                    }
+                    .setPositiveButton(getString(R.string.dialog_close)) { dialog, which ->
+                        findNavController().navigateUp()
+                    }
+                    .show()
+
+            } else {
+                findNavController().navigateUp()
+            }
+        }else{
             findNavController().navigateUp()
         }
     }
 
     companion object {
 
+        const val OPEN_LIST_EDIT = "OPEN_LIST_EDIT"
+
         fun newInstance() = CreateListFragment()
+
+        fun createArgs(playList: PlayList): Bundle {
+            val gson: Gson = KoinJavaComponent.getKoin().get(Gson::class, null)
+            val gsonList = gson.toJson(playList)
+            return bundleOf(OPEN_LIST_EDIT to gsonList)
+        }
     }
 }
