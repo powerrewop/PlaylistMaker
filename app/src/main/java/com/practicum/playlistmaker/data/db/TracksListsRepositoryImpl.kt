@@ -26,6 +26,11 @@ class TracksListsRepositoryImpl(
         emit(trackConverter.listListEntityToListPlayList(allLists))
     }.flowOn(Dispatchers.IO)
 
+    override fun getPlayList(idList: Long): Flow<PlayList?> = flow{
+        val thisList = appDatabase.getListTrackDao().getList(idList)
+        emit(trackConverter.listsEntityToPlayList(thisList))
+    }.flowOn(Dispatchers.IO)
+
     override suspend fun addTrackToList(playListTrack: PlayListTrack) {
         appDatabase.getListTrackDao().insertTrack(trackConverter.playListTrackToTracksLists(playListTrack))
     }
@@ -48,4 +53,8 @@ class TracksListsRepositoryImpl(
         val allTracks = appDatabase.getListTrackDao().getAllTracks()
         emit(trackConverter.listTrackListEntityToPlayListTrack(allTracks))
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun getAlltimeList(idList: Long): Int {
+        return appDatabase.getListTrackDao().getAllTimeList(idList)?:0
+    }
 }

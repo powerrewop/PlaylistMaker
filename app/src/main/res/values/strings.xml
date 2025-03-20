@@ -39,5 +39,14 @@
     <string name="dialog_cancel">Отмена</string>
     <string name="dialog_close">Завершить</string>
     <string name="list_image_name">list_images</string>
+    <string name="edit_playlist_tittle">Редактировать</string>
+    <string name="edit_playlist_button">Сохранить</string>
+    <string name="dialog_yes">ДА</string>
+    <string name="dialog_no">НЕТ</string>
+    <string name="dialog_deltrack_title">Хотите удалить трек?</string>
+    <string name="dialog_delplaylist_title">Удалить плейлист</string>
+    <string name="dialog_delplaylist_text">Хотите удалить плейлист?</string>
+    <string name="message_share">В этом плейлисте нет списка треков, которым можно поделиться</string>
+    <string name="message_playlist_empty">В этом плейлисте нет треков</string>
 </resources>
 

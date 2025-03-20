@@ -38,6 +38,10 @@ class ParentActivity : AppCompatActivity() {
                     bottomNavigationView.visibility = View.GONE
                 }
 
+                R.id.viewPlayListFragment -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
+
                 else -> {
                     bottomNavigationView.visibility = View.VISIBLE
                 }

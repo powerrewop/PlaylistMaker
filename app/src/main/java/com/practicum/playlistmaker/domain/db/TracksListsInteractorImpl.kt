@@ -18,6 +18,10 @@ class TracksListsInteractorImpl(private val tracksListsRepository: TracksListsRe
         return tracksListsRepository.getAllLists()
     }
 
+    override fun getPlayList(idList: Long): Flow<PlayList?> {
+        return tracksListsRepository.getPlayList(idList)
+    }
+
     override suspend fun addTrackToList(playListTrack: PlayListTrack) {
         tracksListsRepository.addTrackToList(playListTrack)
     }
@@ -36,5 +40,9 @@ class TracksListsInteractorImpl(private val tracksListsRepository: TracksListsRe
 
     override fun getAllTracks(): Flow<List<PlayListTrack>?> {
         return tracksListsRepository.getAllTracks()
+    }
+
+    override suspend fun getAllTimeTrack(idList: Long): Int {
+        return tracksListsRepository.getAlltimeList(idList)
     }
 }

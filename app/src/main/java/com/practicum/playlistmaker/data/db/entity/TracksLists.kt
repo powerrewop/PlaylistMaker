@@ -22,5 +22,6 @@ data class TracksLists(
     var primaryGenreName: String,
     var country: String,
     var previewUrl: String?,
+    var dateAdd: Long?
 )
 

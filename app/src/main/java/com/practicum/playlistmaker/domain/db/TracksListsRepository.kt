@@ -12,6 +12,8 @@ interface TracksListsRepository {
 
     fun getAllLists(): Flow<List<PlayList>?>
 
+    fun getPlayList(idList: Long): Flow<PlayList?>
+
     suspend fun addTrackToList(playListTrack: PlayListTrack)
     suspend fun deleteTrackFromList(playListTrack: PlayListTrack)
 
@@ -20,5 +22,7 @@ interface TracksListsRepository {
     fun getTrackThisList(idList: Long, idTrack: Long): Flow<List<PlayListTrack>?>
 
     fun getAllTracks(): Flow<List<PlayListTrack>?>
+
+    suspend fun getAlltimeList(idList: Long): Int
 
 }

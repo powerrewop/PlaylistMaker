@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -170,8 +171,19 @@ class PlayerFragment(): Fragment() {
         }
         ///////////////////////////
 
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
 
+                findNavController().navigateUp()
+            }
+        })
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        viewModel.pausePlayer()
     }
 
     override fun onPause() {

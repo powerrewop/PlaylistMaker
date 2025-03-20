@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.practicum.playlistmaker.databinding.SettingsFragmentBinding
 import com.practicum.playlistmaker.presentation.ViewModels.SettingsFragmentViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -54,6 +56,13 @@ class SettingsFragment : Fragment() {
         swTheme?.setOnCheckedChangeListener { switcher, checked ->
             viewModel.setThemeClick(checked)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                findNavController().navigateUp()
+            }
+        })
 
     }
 }

@@ -16,7 +16,7 @@ class SettingsFragmentViewModel(
         return isDarkTheme
     }
     fun shareClick(){
-        intentInteractor.openSend()
+        intentInteractor.openSend(null)
     }
     fun supportClick(){
         intentInteractor.openSendTo()

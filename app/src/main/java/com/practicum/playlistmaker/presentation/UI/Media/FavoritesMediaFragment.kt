@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -58,6 +59,13 @@ class FavoritesMediaFragment : Fragment() {
             setVisibility(it)
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                //findNavController().navigateUp()
+                requireActivity().finish()
+            }
+        })
     }
 
     fun adapterInit(adapterListTracks: List<Track>?) {

@@ -21,6 +21,9 @@ interface ListTrackDao {
     @Query("SELECT * FROM lists_table")
     fun getLists(): List<ListsEntity>
 
+    @Query("SELECT * FROM lists_table WHERE id = :idList")
+    fun getList(idList: Long): ListsEntity
+
 
     /////////////////////
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,7 +32,7 @@ interface ListTrackDao {
     @Delete()
     suspend fun deleteTrack(tracksLists: TracksLists)
 
-    @Query("SELECT * FROM tracks_lists_table WHERE listId = :idList")
+    @Query("SELECT * FROM tracks_lists_table WHERE listId = :idList ORDER BY dateAdd DESC")
     fun getTracks(idList: Long): List<TracksLists>
 
     @Query("SELECT * FROM tracks_lists_table WHERE listId = :idList AND trackId = :idTrack")
@@ -37,5 +40,8 @@ interface ListTrackDao {
 
     @Query("SELECT * FROM tracks_lists_table")
     fun getAllTracks(): List<TracksLists>
+
+    @Query("SELECT SUM(trackTime) FROM tracks_lists_table WHERE listId = :idList")
+    suspend fun getAllTimeList(idList: Long): Int?
 
 }

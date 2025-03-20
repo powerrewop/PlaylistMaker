@@ -71,22 +71,28 @@ class MediaPlayerNew(private val mediaPlayer: MediaPlayer) {
 
        private suspend fun createUpdateTimerTask() {
 
-            val timeTrack = mediaPlayer.currentPosition
+           try {
 
-            mediaPlayer.setOnCompletionListener {
-                pausePlayer()
-                updJob.cancel()
-                setTime.invoke("00:00")
-            }
+               val timeTrack = mediaPlayer.currentPosition
 
-            if (playerState == STATE_PLAYING) {
-                setTime.invoke(SimpleDateFormat("mm:ss", Locale.getDefault()).format(timeTrack))
+               mediaPlayer.setOnCompletionListener {
+                   pausePlayer()
+                   updJob.cancel()
+                   setTime.invoke("00:00")
+               }
 
-                updJob = GlobalScope.launch {
-                    delay(TIMER_DELAY)
-                    createUpdateTimerTask()
-                }
-            }
+               if (playerState == STATE_PLAYING) {
+                   setTime.invoke(SimpleDateFormat("mm:ss", Locale.getDefault()).format(timeTrack))
+
+                   updJob = GlobalScope.launch {
+                       delay(TIMER_DELAY)
+                       createUpdateTimerTask()
+                   }
+               }
+
+           }catch (e: Throwable){
+
+           }
         }
 
     companion object {

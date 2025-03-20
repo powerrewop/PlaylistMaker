@@ -69,7 +69,8 @@ class TrackConverter {
             playListTrack.releaseDate,
             playListTrack.primaryGenreName,
             playListTrack.country,
-            playListTrack.previewUrl
+            playListTrack.previewUrl,
+            System.currentTimeMillis()
         )
     }
 
@@ -104,4 +105,9 @@ class TrackConverter {
         )
         }
     }
+
+    fun listsEntityToPlayList(ple: ListsEntity): PlayList{
+        return PlayList(ple.id, ple.name, ple.image, ple.desc, null, false)
+    }
+
 }

@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -121,6 +122,13 @@ class SearchFragment : Fragment() {
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
         recycler.layoutManager = LinearLayoutManager(requireContext())
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                findNavController().navigateUp()
+            }
+        })
 
     }
 

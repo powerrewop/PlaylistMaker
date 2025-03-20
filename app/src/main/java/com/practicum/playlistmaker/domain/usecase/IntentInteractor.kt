@@ -1,14 +1,13 @@
 package com.practicum.playlistmaker.domain.usecase
 
-import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.storage.interfaces.IntentRepository
 
 class IntentInteractor(private val intentRepository: IntentRepository) {
 
     var callBack: ((idTrack: Long, newFav: Boolean) -> Unit)? = null
 
-    fun openSend(){
-        intentRepository.openSend()
+    fun openSend(textShare: String?){
+        intentRepository.openSend(textShare)
     }
     fun openSendTo(){
         intentRepository.openSendTo()

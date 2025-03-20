@@ -6,6 +6,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.SamplePlaylistBigBinding
 import com.practicum.playlistmaker.databinding.SamplePlaylistSmallBinding
+import com.practicum.playlistmaker.databinding.SampleUserSelectBinding
 import com.practicum.playlistmaker.domain.model.PlayList
 
 class ListViewHolder(private val binding: SamplePlaylistBigBinding) : RecyclerView.ViewHolder(binding.root)  {
@@ -30,6 +31,14 @@ class ListViewHolderSmall(private val binding: SamplePlaylistSmallBinding) : Rec
 
         Glide.with(itemView).load(model.image).placeholder(R.drawable.empty_image)
             .centerCrop().transform(RoundedCorners(2)).into(binding.sampleIv)
+    }
+
+}
+
+class UserSelectViewHolder(private val binding: SampleUserSelectBinding) : RecyclerView.ViewHolder(binding.root)  {
+
+    fun bind(model: PlayList) {
+        binding.userSelect.text = model.name
     }
 
 }
